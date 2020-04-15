@@ -147,6 +147,7 @@
 #cmakedefine OQS_ENABLE_SIG_RAINBOW 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_Ia_classic 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_Ia_cyclic 1
+#cmakedefine OQS_ENABLE_SIG_rainbow_Ia_cyclic_avx2 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_Ia_cyclic_compressed 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_IIIc_classic 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_IIIc_cyclic 1

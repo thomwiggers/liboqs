@@ -290,8 +290,6 @@ sigs:
         scheme: "Ia_cyclic"
         pqclean_scheme: rainbowIa-cyclic
         pretty_name_full: Rainbow-Ia-Cyclic
-        implementation: clean
-        sources: ['blas_comm.c', 'parallel_matrix_op.c', 'rainbow.c', 'rainbow_keypair.c', 'rainbow_keypair_computation.c', 'sign.c', 'utils_hash.c', 'utils_prng.c', 'blas.c', 'gf.c']
         signed_msg_order: msg_then_sig
       -
         scheme: "Ia_cyclic_compressed"

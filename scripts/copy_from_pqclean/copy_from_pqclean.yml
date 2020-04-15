@@ -247,8 +247,6 @@ sigs:
         scheme: "512"
         pqclean_scheme: falcon-512
         pretty_name_full: Falcon-512
-        implementation: clean
-        sources: ['codec.c', 'common.c', 'fft.c', 'fpr.c', 'keygen.c', 'pqclean.c', 'rng.c', 'sign.c', 'vrfy.c']
         signed_msg_order: falcon
       -
         scheme: "1024"

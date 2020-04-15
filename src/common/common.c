@@ -44,6 +44,7 @@ static void set_available_cpu_extensions_x86_64(void) {
 	available_cpu_extensions.POPCNT_ENABLED = is_bit_set(leaf_1.ecx, 23);
 	available_cpu_extensions.BMI_ENABLED = is_bit_set(leaf_7.ebx, 3);
 	available_cpu_extensions.BMI2_ENABLED = is_bit_set(leaf_7.ebx, 8);
+	available_cpu_extensions.FMA_ENABLED = is_bit_set(leaf_1.ecx, 12);
 
 	if (has_mask(xcr0_eax, MASK_XMM)) {
 		available_cpu_extensions.SSE_ENABLED = is_bit_set(leaf_1.edx, 25);

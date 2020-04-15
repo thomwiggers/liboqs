@@ -142,6 +142,9 @@ endif()
 
 option(OQS_ENABLE_SIG_FALCON "" ON)
 cmake_dependent_option(OQS_ENABLE_SIG_falcon_512 "" ON "OQS_ENABLE_SIG_FALCON" OFF)
+if(ARCH STREQUAL "x86_64" AND CMAKE_SYSTEM_NAME MATCHES "Darwin|Linux" AND OQS_USE_AVX2_INSTRUCTIONS AND OQS_USE_FMA_INSTRUCTIONS)
+    cmake_dependent_option(OQS_ENABLE_SIG_falcon_512_avx2 "" ON "OQS_ENABLE_SIG_falcon_512" OFF)
+endif()
 cmake_dependent_option(OQS_ENABLE_SIG_falcon_1024 "" ON "OQS_ENABLE_SIG_FALCON" OFF)
 
 option(OQS_ENABLE_SIG_MQDSS "" ON)

@@ -273,6 +273,13 @@ sigs:
         implementation: clean
         sources: ['gf31.c', 'mq.c', 'sign.c']
         signed_msg_order: sig_then_msg
+  - name: gemss
+    default_implementation: avx2
+    schemes:
+      - scheme: "128"
+        pqclean_scheme: "gemss128"
+        pretty_name_full: GeMSS128
+        signed_msg_order: sig_then_msg
   -
     name: rainbow
     default_implementation: clean

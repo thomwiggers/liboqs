@@ -19,7 +19,7 @@ if(OQS_ENABLE_SIG_rainbow_Ia_cyclic_avx2)
     add_library(rainbow_Ia_cyclic_avx2 OBJECT pqclean_rainbowIa-cyclic_avx2/blas_comm.c pqclean_rainbowIa-cyclic_avx2/blas_comm_avx2.c pqclean_rainbowIa-cyclic_avx2/blas_comm_sse.c pqclean_rainbowIa-cyclic_avx2/gf16.c pqclean_rainbowIa-cyclic_avx2/parallel_matrix_op.c pqclean_rainbowIa-cyclic_avx2/parallel_matrix_op_avx2.c pqclean_rainbowIa-cyclic_avx2/rainbow_keypair.c pqclean_rainbowIa-cyclic_avx2/rainbow_keypair_computation.c pqclean_rainbowIa-cyclic_avx2/rainbow_keypair_computation_simd.c pqclean_rainbowIa-cyclic_avx2/rainbow_simd.c pqclean_rainbowIa-cyclic_avx2/sign.c pqclean_rainbowIa-cyclic_avx2/utils_hash.c pqclean_rainbowIa-cyclic_avx2/utils_prng.c)
     target_include_directories(rainbow_Ia_cyclic_avx2 PRIVATE ${PROJECT_SOURCE_DIR}/src/common/pqclean_shims)
     target_include_directories(rainbow_Ia_cyclic_avx2 PRIVATE ${CMAKE_CURRENT_LIST_DIR}/pqclean_rainbowIa-cyclic_avx2)
-    target_compile_options(rainbow_Ia_cyclic_avx2 PRIVATE -mavx2 -Wno-error)
+    target_compile_options(rainbow_Ia_cyclic_avx2 PRIVATE -mavx2 -Wno-all -Wno-extra -Wno-error -Wno-pedantic)
     set(_RAINBOW_OBJS ${_RAINBOW_OBJS} $<TARGET_OBJECTS:rainbow_Ia_cyclic_avx2>)
 endif()
 

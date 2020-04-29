@@ -59,4 +59,8 @@
 #define shake256_inc_ctx_release OQS_SHA3_shake256_inc_ctx_release
 #define shake256_inc_ctx_clone OQS_SHA3_shake256_inc_ctx_clone
 
+
+#define PQC_KeccakP1600times4_PermuteAll_24rounds KeccakP1600times4_PermuteAll_24rounds
+
+
 #endif

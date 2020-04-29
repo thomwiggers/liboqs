@@ -21,6 +21,7 @@ OQS_API const char *OQS_SIG_alg_identifier(size_t i) {
 		OQS_SIG_alg_falcon_1024,
 		OQS_SIG_alg_mqdss_31_48,
 		OQS_SIG_alg_mqdss_31_64,
+		OQS_SIG_alg_gemss_128,
 		OQS_SIG_alg_rainbow_Ia_classic,
 		OQS_SIG_alg_rainbow_Ia_cyclic,
 		OQS_SIG_alg_rainbow_Ia_cyclic_compressed,
@@ -135,6 +136,12 @@ OQS_API int OQS_SIG_alg_is_enabled(const char *method_name) {
 #endif
 	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_mqdss_31_64)) {
 #ifdef OQS_ENABLE_SIG_mqdss_31_64
+		return 1;
+#else
+		return 0;
+#endif
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_gemss_128)) {
+#ifdef OQS_ENABLE_SIG_gemss_128
 		return 1;
 #else
 		return 0;
@@ -528,6 +535,12 @@ OQS_API OQS_SIG *OQS_SIG_new(const char *method_name) {
 	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_mqdss_31_64)) {
 #ifdef OQS_ENABLE_SIG_mqdss_31_64
 		return OQS_SIG_mqdss_31_64_new();
+#else
+		return NULL;
+#endif
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_gemss_128)) {
+#ifdef OQS_ENABLE_SIG_gemss_128
+		return OQS_SIG_gemss_128_new();
 #else
 		return NULL;
 #endif

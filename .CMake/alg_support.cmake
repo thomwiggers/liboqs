@@ -151,6 +151,9 @@ option(OQS_ENABLE_SIG_MQDSS "" ON)
 cmake_dependent_option(OQS_ENABLE_SIG_mqdss_31_48 "" ON "OQS_ENABLE_SIG_MQDSS" OFF)
 cmake_dependent_option(OQS_ENABLE_SIG_mqdss_31_64 "" ON "OQS_ENABLE_SIG_MQDSS" OFF)
 
+option(OQS_ENABLE_SIG_GEMSS "" ON)
+cmake_dependent_option(OQS_ENABLE_SIG_gemss_128 "" ON "OQS_ENABLE_SIG_GEMSS" OFF)
+
 option(OQS_ENABLE_SIG_RAINBOW "" ON)
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_Ia_classic "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_Ia_cyclic "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)

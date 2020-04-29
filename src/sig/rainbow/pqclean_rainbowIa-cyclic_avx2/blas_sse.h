@@ -404,7 +404,7 @@ void gf16v_generate_multab_sse( uint8_t *_multabs, const uint8_t *x, unsigned n 
     for (unsigned i = 0; i < n_32; i++) {
         //for(unsigned j=0;j<16;j++) _x[j] = x[i*16+j];
         //__m128i x32 = _mm_load_si128( (__m128i*) _x );
-        __m128i x32 = _mm_loadu_si128( (__m128i *) (x + i * 16) );
+        __m128i x32 = _mm_loadu_si128( (__m128i_u *) (x + i * 16) );
         gf16v_split_16to32_sse( (__m128i *)_x, x32 );
 
         gf16v_generate_multab_16_sse( _multabs +  i * 2 * 16 * 16, _x );

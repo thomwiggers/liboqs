@@ -68,6 +68,8 @@ extern "C" {
 #define OQS_SIG_alg_mqdss_31_48 "MQDSS-31-48"
 /** Algorithm identifier for MQDSS-31-64 */
 #define OQS_SIG_alg_mqdss_31_64 "MQDSS-31-64"
+/** Algorithm identifier for GeMSS128 */
+#define OQS_SIG_alg_gemss_128 "GeMSS128"
 /** Algorithm identifier for Rainbow-Ia-Classic */
 #define OQS_SIG_alg_rainbow_Ia_classic "Rainbow-Ia-Classic"
 /** Algorithm identifier for Rainbow-Ia-Cyclic */
@@ -162,7 +164,7 @@ extern "C" {
 // EDIT-WHEN-ADDING-SIG
 ///// OQS_COPY_FROM_PQCLEAN_FRAGMENT_ALGS_LENGTH_START
 /** Number of algorithm identifiers above (including default). */
-#define OQS_SIG_algs_length 64
+#define OQS_SIG_algs_length 65
 ///// OQS_COPY_FROM_PQCLEAN_FRAGMENT_ALGS_LENGTH_END
 
 /**
@@ -344,6 +346,9 @@ OQS_API void OQS_SIG_free(OQS_SIG *sig);
 #ifdef OQS_ENABLE_SIG_MQDSS
 #include <oqs/sig_mqdss.h>
 #endif /* OQS_ENABLE_SIG_MQDSS */
+#ifdef OQS_ENABLE_SIG_GEMSS
+#include <oqs/sig_gemss.h>
+#endif /* OQS_ENABLE_SIG_GEMSS */
 #ifdef OQS_ENABLE_SIG_RAINBOW
 #include <oqs/sig_rainbow.h>
 #endif /* OQS_ENABLE_SIG_RAINBOW */

@@ -375,6 +375,12 @@ endif()
 
 option(OQS_ENABLE_SIG_RAINBOW "Enable rainbow algorithm family" ON)
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_I_classic "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)
+if(CMAKE_SYSTEM_NAME MATCHES "Linux|Darwin")
+if(OQS_DIST_X86_64_BUILD OR (OQS_USE_AVX2_INSTRUCTIONS))
+    cmake_dependent_option(OQS_ENABLE_SIG_rainbow_I_classic_avx2 "" ON "OQS_ENABLE_SIG_rainbow_I_classic" OFF)
+endif()
+endif()
+
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_I_circumzenithal "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_I_compressed "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_III_classic "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)

@@ -14,6 +14,7 @@ endif()
 
 if(OQS_ENABLE_SIG_rainbow_I_classic_avx2)
     add_library(rainbow_I_classic_avx2 OBJECT pqclean_rainbowI-classic_avx2/blas_comm.c pqclean_rainbowI-classic_avx2/blas_matrix.c pqclean_rainbowI-classic_avx2/blas_matrix_avx2.c pqclean_rainbowI-classic_avx2/blas_matrix_ref.c pqclean_rainbowI-classic_avx2/blas_matrix_sse.c pqclean_rainbowI-classic_avx2/gf16.c pqclean_rainbowI-classic_avx2/parallel_matrix_op.c pqclean_rainbowI-classic_avx2/parallel_matrix_op_avx2.c pqclean_rainbowI-classic_avx2/rainbow_keypair.c pqclean_rainbowI-classic_avx2/rainbow_keypair_computation.c pqclean_rainbowI-classic_avx2/rainbow_keypair_computation_simd.c pqclean_rainbowI-classic_avx2/rainbow_publicmap.c pqclean_rainbowI-classic_avx2/rainbow_simd.c pqclean_rainbowI-classic_avx2/sign.c pqclean_rainbowI-classic_avx2/utils.c pqclean_rainbowI-classic_avx2/utils_hash.c pqclean_rainbowI-classic_avx2/utils_prng.c)
+    target_compile_options(rainbow_I_classic_avx2 PRIVATE -Wno-error)
     target_include_directories(rainbow_I_classic_avx2 PRIVATE ${CMAKE_CURRENT_LIST_DIR}/pqclean_rainbowI-classic_avx2)
     target_include_directories(rainbow_I_classic_avx2 PRIVATE ${PROJECT_SOURCE_DIR}/src/common/pqclean_shims)
     target_compile_options(rainbow_I_classic_avx2 PRIVATE -mavx2)

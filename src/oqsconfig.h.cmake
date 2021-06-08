@@ -193,6 +193,7 @@
 #cmakedefine OQS_ENABLE_SIG_rainbow_I_classic 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_I_classic_avx2 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_I_circumzenithal 1
+#cmakedefine OQS_ENABLE_SIG_rainbow_I_circumzenithal_avx2 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_I_compressed 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_III_classic 1
 #cmakedefine OQS_ENABLE_SIG_rainbow_III_circumzenithal 1

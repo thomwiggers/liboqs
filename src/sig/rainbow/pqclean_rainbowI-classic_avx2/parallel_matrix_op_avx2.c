@@ -19,7 +19,7 @@
 
 
 
-void batch_trimat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -37,7 +37,7 @@ void batch_trimat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned cha
     }
 }
 
-void batch_trimat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -61,7 +61,7 @@ void batch_trimat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned ch
 
 
 
-void batch_trimatTr_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimatTr_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -77,7 +77,7 @@ void batch_trimatTr_madd_multab_gf16_avx2( unsigned char * bC , const unsigned c
     }
 }
 
-void batch_trimatTr_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimatTr_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -97,7 +97,7 @@ void batch_trimatTr_madd_multab_gf256_avx2( unsigned char * bC , const unsigned 
 
 
 
-void batch_2trimat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_2trimat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -113,7 +113,7 @@ void batch_2trimat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned ch
     }
 }
 
-void batch_2trimat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_2trimat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -132,7 +132,7 @@ void batch_2trimat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned c
 
 
 
-void batch_matTr_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* A_to_tr , unsigned Aheight, unsigned size_Acolvec, unsigned Awidth,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_matTr_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* A_to_tr , unsigned Aheight, unsigned size_Acolvec, unsigned Awidth,
         const unsigned char* bB, unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Acolvec; // unused
@@ -146,7 +146,7 @@ void batch_matTr_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char
     }
 }
 
-void batch_matTr_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* A_to_tr , unsigned Aheight, unsigned size_Acolvec, unsigned Awidth,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_matTr_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* A_to_tr , unsigned Aheight, unsigned size_Acolvec, unsigned Awidth,
         const unsigned char* bB, unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Acolvec; // unused
@@ -163,7 +163,7 @@ void batch_matTr_madd_multab_gf256_avx2( unsigned char * bC , const unsigned cha
 
 
 
-void batch_bmatTr_madd_multab_gf16_avx2( unsigned char *bC , const unsigned char *bA_to_tr, unsigned Awidth_before_tr,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_bmatTr_madd_multab_gf16_avx2( unsigned char *bC , const unsigned char *bA_to_tr, unsigned Awidth_before_tr,
         const unsigned char *B, unsigned Bheight, unsigned size_Bcolvec, unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -179,7 +179,7 @@ void batch_bmatTr_madd_multab_gf16_avx2( unsigned char *bC , const unsigned char
     }
 }
 
-void batch_bmatTr_madd_multab_gf256_avx2( unsigned char *bC , const unsigned char *bA_to_tr, unsigned Awidth_before_tr,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_bmatTr_madd_multab_gf256_avx2( unsigned char *bC , const unsigned char *bA_to_tr, unsigned Awidth_before_tr,
         const unsigned char *B, unsigned Bheight, unsigned size_Bcolvec, unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -199,7 +199,7 @@ void batch_bmatTr_madd_multab_gf256_avx2( unsigned char *bC , const unsigned cha
 
 
 
-void batch_mat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* bA , unsigned Aheight,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_mat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* bA , unsigned Aheight,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -215,7 +215,7 @@ void batch_mat_madd_multab_gf16_avx2( unsigned char * bC , const unsigned char* 
     }
 }
 
-void batch_mat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* bA , unsigned Aheight,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_mat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char* bA , unsigned Aheight,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch )
 {
     (void) size_Bcolvec; // unused
@@ -246,15 +246,15 @@ void batch_mat_madd_multab_gf256_avx2( unsigned char * bC , const unsigned char*
 
 
 
-void batch_quad_trimat_eval_multab_gf16_avx2( unsigned char * y, const unsigned char * trimat, const unsigned char * x_multab, unsigned dim , unsigned size_batch )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_quad_trimat_eval_multab_gf16_avx2( unsigned char * y, const unsigned char * trimat, const unsigned char * x_multab, unsigned dim , unsigned size_batch )
 {
 ///    assert( dim <= 128 );
 ///    assert( size_batch <= 128 );
     unsigned char tmp[256] __attribute__((aligned(32)));
 
-    gf256v_set_zero( y , size_batch );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( y , size_batch );
     for(unsigned i=0;i<dim;i++) {
-        gf16mat_prod_multab_avx2( tmp , trimat , size_batch , dim-i , x_multab+16*i );
+        PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_multab_avx2( tmp , trimat , size_batch , dim-i , x_multab+16*i );
         trimat += size_batch*(dim-i);
         gf16v_madd_multab_avx2( y , tmp , x_multab+16*i , size_batch );
     }
@@ -264,15 +264,15 @@ void batch_quad_trimat_eval_multab_gf16_avx2( unsigned char * y, const unsigned 
 
 
 
-void batch_quad_trimat_eval_multab_gf256_avx2( unsigned char * y, const unsigned char * trimat, const unsigned char * x_multab, unsigned dim , unsigned size_batch )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_quad_trimat_eval_multab_gf256_avx2( unsigned char * y, const unsigned char * trimat, const unsigned char * x_multab, unsigned dim , unsigned size_batch )
 {
 ///    assert( dim <= 128 );
 ///    assert( size_batch <= 128 );
     unsigned char tmp[256] __attribute__((aligned(32)));
 
-    gf256v_set_zero( y , size_batch );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( y , size_batch );
     for(unsigned i=0;i<dim;i++) {
-        gf256v_set_zero( tmp , size_batch );
+        PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( tmp , size_batch );
         for(unsigned j=i;j<dim;j++) {
            gf256v_madd_multab_avx2( tmp , trimat , x_multab+32*j , size_batch );
            trimat += size_batch;

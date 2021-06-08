@@ -8,7 +8,7 @@
 ## Implementation
 
 - **Source of implementation**: https://github.com/fast-crypto-lab/rainbow-submission-round2/commit/173ada0e077e1b9dbd8e4a78994f87acc0c92263
-- **Implementation version**: https://github.com/thomwiggers/PQClean.git, pqdirty-rainbow, 0bde2c108d813d785e39c37cd82d0de6423dc7bb
+- **Implementation version**: https://github.com/thomwiggers/PQClean.git, pqdirty-rainbow, e8091e592ded24f046f8e55c6241577f78b5f713
 - **License**: CC0 1.0
 - **Constant-time**: Yes
 - **Optimizations**: Portable C with AVX2 instructions (if available at run-time)

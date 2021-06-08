@@ -40,7 +40,7 @@ static inline int expand_hash(unsigned char *digest, size_t n_digest, const unsi
     return 0;
 }
 
-int hash_msg(unsigned char *digest,
+int PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg(unsigned char *digest,
         size_t len_digest,
         const unsigned char *m,
         size_t mlen) {

@@ -35,7 +35,7 @@
 
 
 
-int rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * _digest )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * _digest )
 {
     // allocate temporary storage.
     uint8_t _ALIGN_(32) mat_l1[_O1*_O1_BYTE];
@@ -47,8 +47,8 @@ int rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * _diges
     memcpy( prng_preseed , sk->sk_seed , LEN_SKSEED );
     memcpy( prng_preseed + LEN_SKSEED , _digest , _HASH_LEN );                        // prng_preseed = sk_seed || digest
     uint8_t prng_seed[_HASH_LEN];
-    hash_msg( prng_seed , _HASH_LEN , prng_preseed , _HASH_LEN+LEN_SKSEED );
-    prng_set( &prng_sign , prng_seed , _HASH_LEN );                                   // seed = H( sk_seed || digest )
+    PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg( prng_seed , _HASH_LEN , prng_preseed , _HASH_LEN+LEN_SKSEED );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set( &prng_sign , prng_seed , _HASH_LEN );                                   // seed = H( sk_seed || digest )
     for(unsigned i=0;i<LEN_SKSEED+_HASH_LEN;i++) prng_preseed[i] ^= prng_preseed[i];  // clean
     for(unsigned i=0;i<_HASH_LEN;i++) prng_seed[i] ^= prng_seed[i];                   // clean
 
@@ -58,7 +58,7 @@ int rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * _diges
     unsigned l1_succ = 0;
     while( !l1_succ ) {
         if( MAX_ATTEMPT_FRMAT <= n_attempt ) break;
-        prng_gen( &prng_sign , vinegar , _V1_BYTE );                       // generating vinegars
+        PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng_sign , vinegar , _V1_BYTE );                       // generating vinegars
         gfmat_prod( mat_l1 , sk->l1_F2 , _O1*_O1_BYTE , _V1 , vinegar );   // generating the linear equations for layer 1
         l1_succ = gfmat_inv( mat_l1 , mat_l1 );         // check if the linear equation solvable
         n_attempt ++;
@@ -94,8 +94,8 @@ int rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * _diges
         if( MAX_ATTEMPT_FRMAT <= n_attempt ) break;
         // The computation:  H(digest||salt)  -->   z   --S-->   y  --C-map-->   x   --T-->   w
 
-        prng_gen( &prng_sign , salt , _SALT_BYTE );                        // roll the salt
-        hash_msg( _z , _PUB_M_BYTE , digest_salt , _HASH_LEN+_SALT_BYTE ); // H(digest||salt)
+        PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng_sign , salt , _SALT_BYTE );                        // roll the salt
+        PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg( _z , _PUB_M_BYTE , digest_salt , _HASH_LEN+_SALT_BYTE ); // H(digest||salt)
 
         //  y = S^-1 * z
         memcpy(y, _z, _PUB_M_BYTE);                                    // identity part of S
@@ -111,7 +111,7 @@ int rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * _diges
         gfv_generate_multab( multab , x_o1 , _O1 );
 
         // layer 2: calculate x_o2
-        gf256v_set_zero( temp_o , _O2_BYTE );
+        PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( temp_o , _O2_BYTE );
         gfmat_prod_multab( temp_o , mat_l2_F2, _O2_BYTE , _O1 , multab );              // F2
         batch_quad_trimat_eval_multab( mat_l2 , sk->l2_F5, multab , _O1, _O2_BYTE );   // F5
         gf256v_add( temp_o , mat_l2 , _O2_BYTE );
@@ -173,7 +173,7 @@ int _rainbow_verify( const uint8_t * digest , const uint8_t * salt , const unsig
     unsigned char digest_salt[_HASH_LEN + _SALT_BYTE];
     memcpy( digest_salt , digest , _HASH_LEN );
     memcpy( digest_salt+_HASH_LEN , salt , _SALT_BYTE );
-    hash_msg( correct , _PUB_M_BYTE , digest_salt , _HASH_LEN+_SALT_BYTE );  // H( digest || salt )
+    PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg( correct , _PUB_M_BYTE , digest_salt , _HASH_LEN+_SALT_BYTE );  // H( digest || salt )
 
     // check consistancy.
     unsigned char cc = 0;
@@ -184,10 +184,10 @@ int _rainbow_verify( const uint8_t * digest , const uint8_t * salt , const unsig
 }
 
 
-int rainbow_verify( const uint8_t * digest , const uint8_t * signature , const pk_t * pk )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_verify( const uint8_t * digest , const uint8_t * signature , const pk_t * pk )
 {
     unsigned char digest_ck[_PUB_M_BYTE];
-    rainbow_publicmap( digest_ck , pk->pk , signature );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_publicmap( digest_ck , pk->pk , signature );
 
     return _rainbow_verify( digest , signature+_PUB_N_BYTE , digest_ck );
 }
@@ -197,22 +197,22 @@ int rainbow_verify( const uint8_t * digest , const uint8_t * signature , const p
 ///////////////  cyclic version  ///////////////////////////
 
 
-int rainbow_sign_cyclic( uint8_t * signature , const csk_t * csk , const uint8_t * digest )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_sign_cyclic( uint8_t * signature , const csk_t * csk , const uint8_t * digest )
 {
     sk_t _sk;
     sk_t * sk = &_sk;
-    generate_secretkey_cyclic( sk, csk->pk_seed , csk->sk_seed );   // generating classic secret key.
+    PQCLEAN_RAINBOWICLASSIC_AVX2_generate_secretkey_cyclic( sk, csk->pk_seed , csk->sk_seed );   // generating classic secret key.
 
-    int r = rainbow_sign( signature , sk , digest );
+    int r = PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_sign( signature , sk , digest );
 
     memset( sk , 0 , sizeof(sk_t) ); // clean
     return r;
 }
 
-int rainbow_verify_cyclic( const uint8_t * digest , const uint8_t * signature , const cpk_t * pk )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_verify_cyclic( const uint8_t * digest , const uint8_t * signature , const cpk_t * pk )
 {
     unsigned char digest_ck[_PUB_M_BYTE];
-    rainbow_publicmap_cpk( digest_ck , pk , signature );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_publicmap_cpk( digest_ck , pk , signature );
 
     return _rainbow_verify( digest , signature+_PUB_N_BYTE , digest_ck );
 }

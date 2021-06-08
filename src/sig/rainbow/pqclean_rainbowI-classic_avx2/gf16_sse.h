@@ -9,13 +9,13 @@
 #include "gf16_tabs.h"
 
 // tables:
-//extern const unsigned char __mask_low[];
-//extern const unsigned char __mask_16[];
-//extern const unsigned char __gf16_exp[];
-//extern const char __gf16_log[];
+//extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low[];
+//extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___mask_16[];
+//extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_exp[];
+//extern const char PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_log[];
 //extern const unsigned char __gf16_mul[];
-//extern const unsigned char __gf256_mul[];
-//extern const unsigned char __gf16_mulx2[];
+//extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul[];
+//extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_mulx2[];
 
 
 // SSE2
@@ -43,39 +43,39 @@ static inline __m128i linear_transform_8x8_128b( __m128i tab_l , __m128i tab_h ,
 
 static inline __m128i tbl_gf16_squ( __m128i a )
 {
-	__m128i tab_l = _mm_load_si128((__m128i const *) __gf16_squ );
+	__m128i tab_l = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_squ );
 	return _mm_shuffle_epi8(tab_l,a);
 }
 
 
 static inline __m128i tbl_gf16_squ_x8( __m128i a )
 {
-	__m128i tab_l = _mm_load_si128((__m128i const *) __gf16_squ_x8 );
+	__m128i tab_l = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_squ_x8 );
 	return _mm_shuffle_epi8(tab_l,a);
 }
 
 
 static inline __m128i tbl_gf16_inv( __m128i a )
 {
-	__m128i tab_l = _mm_load_si128((__m128i const *) __gf16_inv );
+	__m128i tab_l = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_inv );
 	return _mm_shuffle_epi8(tab_l,a);
 }
 
 static inline __m128i tbl_gf16_log( __m128i a )
 {
-	__m128i tab_l = _mm_load_si128((__m128i const *) __gf16_log );
+	__m128i tab_l = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_log );
 	return _mm_shuffle_epi8(tab_l,a);
 }
 
 static inline __m128i tbl_gf16_exp( __m128i a )
 {
-	__m128i tab_l = _mm_load_si128((__m128i const *) __gf16_exp );
+	__m128i tab_l = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_exp );
 	return _mm_shuffle_epi8(tab_l,a);
 }
 
 static inline __m128i tbl_gf16_mul_const( unsigned char a , __m128i b )
 {
-	__m128i tab_l = _mm_load_si128((__m128i const *) (__gf256_mul+  ((unsigned)a)*32 ));
+	__m128i tab_l = _mm_load_si128((__m128i const *) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul+  ((unsigned)a)*32 ));
 	return _mm_shuffle_epi8(tab_l,b);
 }
 
@@ -83,7 +83,7 @@ static inline __m128i tbl_gf16_mul_const( unsigned char a , __m128i b )
 
 static inline __m128i tbl_gf16_mul_0x8( __m128i b )
 {
-	__m128i tab_l = _mm_load_si128((__m128i const *) (__gf256_mul+  8*32 ));
+	__m128i tab_l = _mm_load_si128((__m128i const *) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul+  8*32 ));
 	return _mm_shuffle_epi8(tab_l,b);
 }
 
@@ -92,9 +92,9 @@ static inline __m128i tbl_gf16_mul_0x8( __m128i b )
 
 static inline __m128i tbl_gf16_mul( __m128i a , __m128i b )
 {
-	__m128i mask_f = _mm_load_si128((__m128i const *) __mask_low);
-	__m128i log_16 = _mm_load_si128((__m128i const *) __gf16_log);
-	__m128i exp_16 = _mm_load_si128((__m128i const *) __gf16_exp);
+	__m128i mask_f = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low);
+	__m128i log_16 = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_log);
+	__m128i exp_16 = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_exp);
 
 	__m128i la = _mm_shuffle_epi8(log_16,a);
 	__m128i lb = _mm_shuffle_epi8(log_16,b);
@@ -130,9 +130,9 @@ static inline __m128i tbl_gf16_mul_log_log( __m128i loga , __m128i logb , __m128
 
 static inline __m128i tbl_gf256_mul_const( unsigned char a , __m128i b )
 {
-	__m128i mask_f = _mm_load_si128((__m128i const *) __mask_low);
-	__m128i tab_l = _mm_load_si128((__m128i const *) (__gf256_mul+  ((unsigned)a)*32 ));
-	__m128i tab_h = _mm_load_si128((__m128i const *) (__gf256_mul+  ((unsigned)a)*32 + 16 ));
+	__m128i mask_f = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low);
+	__m128i tab_l = _mm_load_si128((__m128i const *) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul+  ((unsigned)a)*32 ));
+	__m128i tab_h = _mm_load_si128((__m128i const *) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul+  ((unsigned)a)*32 + 16 ));
 
 	return linear_transform_8x8_128b( tab_l , tab_h , b , mask_f );
 }
@@ -141,9 +141,9 @@ static inline __m128i tbl_gf256_mul_const( unsigned char a , __m128i b )
 /// use log table
 static inline __m128i tbl_gf256_mul( __m128i a , __m128i b )
 {
-	__m128i mask_f = _mm_load_si128((__m128i const *) __mask_low);
-	__m128i log_16 = _mm_load_si128((__m128i const *) __gf16_log);
-	__m128i exp_16 = _mm_load_si128((__m128i const *) __gf16_exp);
+	__m128i mask_f = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low);
+	__m128i log_16 = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_log);
+	__m128i exp_16 = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_exp);
 
 	__m128i a0 = a&mask_f;
 	__m128i a1 = _mm_srli_epi16(a,4)&mask_f;
@@ -173,13 +173,13 @@ static inline __m128i tbl_gf256_mul( __m128i a , __m128i b )
 
 static inline __m128i tbl_gf16_squ_sl4( __m128i a )
 {
-	__m128i tab_l = _mm_load_si128((__m128i const *) __gf16_squ_sl4 );
+	__m128i tab_l = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_squ_sl4 );
 	return _mm_shuffle_epi8(tab_l,a);
 }
 
 static inline __m128i tbl_gf256_squ( __m128i a )
 {
-	__m128i mask_f = _mm_load_si128((__m128i const *) __mask_low);
+	__m128i mask_f = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low);
 	__m128i a0 = a&mask_f;
 	__m128i a1 = _mm_srli_epi16(a,4)&mask_f;
 	__m128i a0squ = tbl_gf16_squ(a0);
@@ -196,7 +196,7 @@ static inline __m128i tbl_gf256_inv( __m128i a )
 {
 #if 1
 // faster
-	__m128i mask_f = _mm_load_si128((__m128i const *) __mask_low);
+	__m128i mask_f = _mm_load_si128((__m128i const *) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low);
 	__m128i a0 = a&mask_f;
 	__m128i a1 = _mm_srli_epi16(a,4)&mask_f;
 	__m128i a0_a1 = a0^a1;

@@ -16,19 +16,19 @@ int PQCLEAN_RAINBOWICLASSIC_AVX2_crypto_sign_keypair(unsigned char *pk, unsigned
     unsigned char sk_seed[LEN_SKSEED] = {0};
     randombytes(sk_seed, LEN_SKSEED);
 
-    generate_keypair((pk_t *)pk, (sk_t *)sk, sk_seed);
+    PQCLEAN_RAINBOWICLASSIC_AVX2_generate_keypair((pk_t *)pk, (sk_t *)sk, sk_seed);
     return 0;
 }
 
 int PQCLEAN_RAINBOWICLASSIC_AVX2_crypto_sign(unsigned char *sm, size_t *smlen, const unsigned char *m, size_t mlen, const unsigned char *sk) {
     unsigned char digest[_HASH_LEN];
 
-    hash_msg(digest, _HASH_LEN, m, mlen);
+    PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg(digest, _HASH_LEN, m, mlen);
 
     memcpy(sm, m, mlen);
     smlen[0] = mlen + _SIGNATURE_BYTE;
 
-    return rainbow_sign(sm + mlen, (const sk_t *)sk, digest);
+    return PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_sign(sm + mlen, (const sk_t *)sk, digest);
 }
 
 int PQCLEAN_RAINBOWICLASSIC_AVX2_crypto_sign_open(unsigned char *m, size_t *mlen, const unsigned char *sm, size_t smlen, const unsigned char *pk) {
@@ -39,9 +39,9 @@ int PQCLEAN_RAINBOWICLASSIC_AVX2_crypto_sign_open(unsigned char *m, size_t *mlen
         *mlen = smlen - _SIGNATURE_BYTE;
 
         unsigned char digest[_HASH_LEN];
-        hash_msg(digest, _HASH_LEN, sm, *mlen);
+        PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg(digest, _HASH_LEN, sm, *mlen);
 
-        rc = rainbow_verify(digest, sm + mlen[0], (const pk_t *)pk);
+        rc = PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_verify(digest, sm + mlen[0], (const pk_t *)pk);
     }
     if (!rc) {
         memmove(m, sm, smlen - _SIGNATURE_BYTE);
@@ -57,9 +57,9 @@ int PQCLEAN_RAINBOWICLASSIC_AVX2_crypto_sign_signature(
     const uint8_t *m, size_t mlen, const uint8_t *sk) {
     unsigned char digest[_HASH_LEN];
 
-    hash_msg(digest, _HASH_LEN, m, mlen);
+    PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg(digest, _HASH_LEN, m, mlen);
     *siglen = _SIGNATURE_BYTE;
-    return rainbow_sign(sig, (const sk_t *)sk, digest);
+    return PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_sign(sig, (const sk_t *)sk, digest);
 }
 
 int PQCLEAN_RAINBOWICLASSIC_AVX2_crypto_sign_verify(
@@ -69,6 +69,6 @@ int PQCLEAN_RAINBOWICLASSIC_AVX2_crypto_sign_verify(
         return -1;
     }
     unsigned char digest[_HASH_LEN];
-    hash_msg(digest, _HASH_LEN, m, mlen);
-    return rainbow_verify(digest, sig, (const pk_t *)pk);
+    PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg(digest, _HASH_LEN, m, mlen);
+    return PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_verify(digest, sig, (const pk_t *)pk);
 }

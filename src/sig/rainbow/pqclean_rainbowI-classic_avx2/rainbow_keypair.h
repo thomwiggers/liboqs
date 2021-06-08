@@ -106,7 +106,7 @@ struct rainbow_secretkey_cyclic {
 /// @param[in]  sk_seed   - seed for generating the secret key.
 /// @return 0 for success. -1 otherwise.
 ///
-int generate_keypair( pk_t * pk, sk_t* sk, const unsigned char *sk_seed );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_generate_keypair( pk_t * pk, sk_t* sk, const unsigned char *sk_seed );
 
 ///
 /// @brief Generate key pairs for cyclic rainbow.
@@ -117,7 +117,7 @@ int generate_keypair( pk_t * pk, sk_t* sk, const unsigned char *sk_seed );
 /// @param[in]  sk_seed   - seed for generating secret key.
 /// @return 0 for success. -1 otherwise.
 ///
-int generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed );
 
 ///
 /// @brief Generate compressed key pairs for cyclic rainbow.
@@ -128,7 +128,7 @@ int generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed 
 /// @param[in]  sk_seed   - seed for generating the secret key.
 /// @return 0 for success. -1 otherwise.
 ///
-int generate_compact_keypair_cyclic( cpk_t * pk, csk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_generate_compact_keypair_cyclic( cpk_t * pk, csk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed );
 
 ////////////////////////////////////
 
@@ -138,7 +138,7 @@ int generate_compact_keypair_cyclic( cpk_t * pk, csk_t* sk, const unsigned char 
 /// @param[out] sk        - the secret key.
 /// @param[in]  sk_seed   - seed for generating the secret key.
 ///
-void generate_secretkey( sk_t* sk, const unsigned char *sk_seed );
+void PQCLEAN_RAINBOWICLASSIC_AVX2_generate_secretkey( sk_t* sk, const unsigned char *sk_seed );
 
 ///
 /// @brief Convert secret key to public key for classic rainbow.
@@ -147,7 +147,7 @@ void generate_secretkey( sk_t* sk, const unsigned char *sk_seed );
 /// @param[in] sk         - the secret key.
 /// @return 0 for success. -1 otherwise.
 ///
-int sk_to_pk( pk_t * pk , const sk_t* sk );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_sk_to_pk( pk_t * pk , const sk_t* sk );
 
 ///
 /// @brief Generate secret key for cyclic rainbow.
@@ -157,7 +157,7 @@ int sk_to_pk( pk_t * pk , const sk_t* sk );
 /// @param[in]  sk_seed   - seed for generating the secret key.
 /// @return 0 for success. -1 otherwise.
 ///
-int generate_secretkey_cyclic( sk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_generate_secretkey_cyclic( sk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed );
 
 ////////////////////////////////////
 
@@ -168,7 +168,7 @@ int generate_secretkey_cyclic( sk_t* sk, const unsigned char *pk_seed , const un
 /// @param[out] pk       - the classic public key.
 /// @param[in]  cpk      - the cyclic  public key.
 ///
-int cpk_to_pk( pk_t * pk , const cpk_t * cpk );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_cpk_to_pk( pk_t * pk , const cpk_t * cpk );
 
 
 
@@ -182,7 +182,7 @@ int cpk_to_pk( pk_t * pk , const cpk_t * cpk );
 /// @param[in]  pk        - the classic public key.
 /// @param[in]  w         - the input vector w.
 ///
-void rainbow_publicmap( unsigned char * z , const unsigned char *pk , const unsigned char * w );
+void PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_publicmap( unsigned char * z , const unsigned char *pk , const unsigned char * w );
 
 
 ///
@@ -192,7 +192,7 @@ void rainbow_publicmap( unsigned char * z , const unsigned char *pk , const unsi
 /// @param[in]  pk        - the cyclic public key.
 /// @param[in]  w         - the input vector w.
 ///
-void rainbow_publicmap_cpk( unsigned char * z, const cpk_t * pk, const unsigned char *w );
+void PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_publicmap_cpk( unsigned char * z, const cpk_t * pk, const unsigned char *w );
 
 
 

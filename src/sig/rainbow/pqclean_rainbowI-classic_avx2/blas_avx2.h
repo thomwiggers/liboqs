@@ -107,7 +107,7 @@ void gf16v_mul_scalar_avx2( uint8_t * a, uint8_t gf16_b , unsigned _num_byte ) {
 	__m256i m_tab = _mm256_load_si256( (__m256i*) (__gf16_mul + 32*b) );
 	__m256i ml = _mm256_permute2x128_si256( m_tab , m_tab , 0 );
 	__m256i mh = _mm256_permute2x128_si256( m_tab , m_tab , 0x11 );
-	__m256i mask = _mm256_load_si256( (__m256i*) __mask_low );
+	__m256i mask = _mm256_load_si256( (__m256i*) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low );
 
 	linearmap_8x8_ymm( a , ml , mh , mask , _num_byte );
 }
@@ -120,7 +120,7 @@ void gf16v_madd_avx2( uint8_t * accu_c, const uint8_t * a , uint8_t gf16_b, unsi
 	__m256i m_tab = _mm256_load_si256( (__m256i*) (__gf16_mul + 32*b) );
 	__m256i ml = _mm256_permute2x128_si256( m_tab , m_tab , 0 );
 	__m256i mh = _mm256_permute2x128_si256( m_tab , m_tab , 0x11 );
-	__m256i mask = _mm256_load_si256( (__m256i*) __mask_low );
+	__m256i mask = _mm256_load_si256( (__m256i*) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low );
 
 	linearmap_8x8_accu_ymm( accu_c , a , ml , mh , mask , _num_byte );
 }
@@ -131,7 +131,7 @@ void gf16v_madd_multab_avx2( uint8_t * accu_c, const uint8_t * a , const uint8_t
 	__m128i mh_16 = _mm_slli_epi16( ml_16 , 4 );
 	__m256i ml = _mm256_inserti128_si256( _mm256_castsi128_si256(ml_16), ml_16, 1);
 	__m256i mh = _mm256_inserti128_si256( _mm256_castsi128_si256(mh_16), mh_16, 1);
-	__m256i mask = _mm256_load_si256( (__m256i*) __mask_low );
+	__m256i mask = _mm256_load_si256( (__m256i*) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low );
 
 	linearmap_8x8_accu_ymm( accu_c , a , ml , mh , mask , _num_byte );
 }
@@ -143,10 +143,10 @@ void gf16v_madd_multab_avx2( uint8_t * accu_c, const uint8_t * a , const uint8_t
 static inline
 void gf256v_mul_scalar_avx2( uint8_t * a, uint8_t _b , unsigned _num_byte ) {
 	unsigned b = _b;
-	__m256i m_tab = _mm256_load_si256( (__m256i*) (__gf256_mul + 32*b) );
+	__m256i m_tab = _mm256_load_si256( (__m256i*) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul + 32*b) );
 	__m256i ml = _mm256_permute2x128_si256( m_tab , m_tab , 0 );
 	__m256i mh = _mm256_permute2x128_si256( m_tab , m_tab , 0x11 );
-	__m256i mask = _mm256_load_si256( (__m256i*) __mask_low );
+	__m256i mask = _mm256_load_si256( (__m256i*) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low );
 
 	linearmap_8x8_ymm( a , ml , mh , mask , _num_byte );
 }
@@ -157,7 +157,7 @@ void gf256v_madd_multab_avx2( uint8_t * accu_c, const uint8_t * a , const uint8_
 	__m256i m_tab = _mm256_load_si256( (__m256i*) (multab) );
 	__m256i ml = _mm256_permute2x128_si256( m_tab , m_tab , 0 );
 	__m256i mh = _mm256_permute2x128_si256( m_tab , m_tab , 0x11 );
-	__m256i mask = _mm256_load_si256( (__m256i*) __mask_low );
+	__m256i mask = _mm256_load_si256( (__m256i*) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low );
 
 	linearmap_8x8_accu_ymm( accu_c , a , ml , mh , mask , _num_byte );
 }
@@ -167,10 +167,10 @@ void gf256v_madd_multab_avx2( uint8_t * accu_c, const uint8_t * a , const uint8_
 static inline
 void gf256v_madd_avx2( uint8_t * accu_c, const uint8_t * a , uint8_t _b, unsigned _num_byte ) {
 	unsigned b = _b;
-	__m256i m_tab = _mm256_load_si256( (__m256i*) (__gf256_mul + 32*b) );
+	__m256i m_tab = _mm256_load_si256( (__m256i*) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul + 32*b) );
 	__m256i ml = _mm256_permute2x128_si256( m_tab , m_tab , 0 );
 	__m256i mh = _mm256_permute2x128_si256( m_tab , m_tab , 0x11 );
-	__m256i mask = _mm256_load_si256( (__m256i*) __mask_low );
+	__m256i mask = _mm256_load_si256( (__m256i*) PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low );
 
 	linearmap_8x8_accu_ymm( accu_c , a , ml , mh , mask , _num_byte );
 }

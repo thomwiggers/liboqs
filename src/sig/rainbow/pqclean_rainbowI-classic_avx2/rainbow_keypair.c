@@ -31,19 +31,19 @@ void generate_S_T( unsigned char * s_and_t , prng_t * prng0 )
     unsigned size;
 
     size = sizeof(_sk->s1);
-    prng_gen( prng0 , s_and_t , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , s_and_t , size );
     s_and_t += size;
 
     size = sizeof(_sk->t1);
-    prng_gen( prng0 , s_and_t , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , s_and_t , size );
     s_and_t += size;
 
     size = sizeof(_sk->t4);
-    prng_gen( prng0 , s_and_t , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , s_and_t , size );
     s_and_t += size;
 
     size = sizeof(_sk->t3);
-    prng_gen( prng0 , s_and_t , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , s_and_t , size );
     s_and_t += size;
 }
 
@@ -56,12 +56,12 @@ unsigned generate_l1_F12( unsigned char * sk, prng_t * prng0 )
     unsigned size;
 
     size = sizeof(_sk->l1_F1);
-    prng_gen( prng0 , sk , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , sk , size );
     sk += size;
     n_byte_generated += size;
 
     size = sizeof(_sk->l1_F2);
-    prng_gen( prng0 , sk , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , sk , size );
     sk += size;
     n_byte_generated += size;
 
@@ -77,27 +77,27 @@ unsigned generate_l2_F12356( unsigned char * sk, prng_t * prng0 )
     unsigned size;
 
     size = sizeof(_sk->l2_F1);
-    prng_gen( prng0 , sk , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , sk , size );
     sk += size;
     n_byte_generated += size;
 
     size = sizeof(_sk->l2_F2);
-    prng_gen( prng0 , sk , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , sk , size );
     sk += size;
     n_byte_generated += size;
 
     size = sizeof(_sk->l2_F3);
-    prng_gen( prng0 , sk , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , sk , size );
     sk += size;
     n_byte_generated += size;
 
     size = sizeof(_sk->l2_F5);
-    prng_gen( prng0 , sk , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , sk , size );
     sk += size;
     n_byte_generated += size;
 
     size = sizeof(_sk->l2_F6);
-    prng_gen( prng0 , sk , size );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( prng0 , sk , size );
     sk += size;
     n_byte_generated += size;
 
@@ -117,7 +117,7 @@ void generate_B1_B2( unsigned char * sk , prng_t * prng0 )
 
 
 
-int cpk_to_pk( pk_t * rpk, const cpk_t * cpk )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_cpk_to_pk( pk_t * rpk, const cpk_t * cpk )
 {
     // procedure:  cpk_t --> extcpk_t  --> pk_t
 
@@ -131,7 +131,7 @@ int cpk_to_pk( pk_t * rpk, const cpk_t * cpk )
 #endif
     // setup prng
     prng_t prng0;
-    prng_set( &prng0 , cpk->pk_seed , LEN_PKSEED );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set( &prng0 , cpk->pk_seed , LEN_PKSEED );
 
     // generating parts of key with prng
     generate_l1_F12( pk->l1_Q1 , &prng0 );
@@ -147,7 +147,7 @@ int cpk_to_pk( pk_t * rpk, const cpk_t * cpk )
     memcpy( pk->l2_Q9 , cpk->l2_Q9 , sizeof(cpk->l2_Q9) );
 
     // convert from extcpk_t to pk_t
-    extcpk_to_pk( rpk , pk );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_extcpk_to_pk( rpk , pk );
 
 #if defined(_MALLOC_)
     free(pk);
@@ -197,18 +197,18 @@ void obfuscate_l1_polys( unsigned char * l1_polys , const unsigned char * l2_pol
 // For debug
 static void dump_sk( const sk_t* sk )
 {
-  byte_fdump(stdout, "sk->sk_seed:" , sk->sk_seed , LEN_SKSEED ); printf("\n");
-  byte_fdump(stdout, "sk->s1 head:" , sk->s1 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->t1 head:" , sk->t1 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->t4 head:" , sk->t4 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->t3 head:" , sk->t3 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->l1_F1 head:" , sk->l1_F1 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->l1_F2 head:" , sk->l1_F2 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->l2_F1 head:" , sk->l2_F1 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->l2_F2 head:" , sk->l2_F2 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->l2_F3 head:" , sk->l2_F3 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->l2_F5 head:" , sk->l2_F5 , _O2_BYTE ); printf("\n");
-  byte_fdump(stdout, "sk->l2_F6 head:" , sk->l2_F6 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->sk_seed:" , sk->sk_seed , LEN_SKSEED ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->s1 head:" , sk->s1 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->t1 head:" , sk->t1 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->t4 head:" , sk->t4 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->t3 head:" , sk->t3 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->l1_F1 head:" , sk->l1_F1 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->l1_F2 head:" , sk->l1_F2 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->l2_F1 head:" , sk->l2_F1 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->l2_F2 head:" , sk->l2_F2 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->l2_F3 head:" , sk->l2_F3 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->l2_F5 head:" , sk->l2_F5 , _O2_BYTE ); printf("\n");
+  PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(stdout, "sk->l2_F6 head:" , sk->l2_F6 , _O2_BYTE ); printf("\n");
 }
 #endif
 
@@ -219,7 +219,7 @@ void _generate_secretkey( sk_t* sk, const unsigned char *sk_seed )
 
     // set up prng
     prng_t prng0;
-    prng_set( &prng0 , sk_seed , LEN_SKSEED );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set( &prng0 , sk_seed , LEN_SKSEED );
 
     // generating secret key with prng.
     generate_S_T( sk->s1 , &prng0 );
@@ -230,14 +230,14 @@ void _generate_secretkey( sk_t* sk, const unsigned char *sk_seed )
 }
 
 
-void generate_secretkey( sk_t* sk, const unsigned char *sk_seed )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_generate_secretkey( sk_t* sk, const unsigned char *sk_seed )
 {
     _generate_secretkey( sk , sk_seed );
     calculate_t4( sk->t4 , sk->t1 , sk->t3 );
 }
 
 
-int sk_to_pk( pk_t * rpk , const sk_t* isk )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_sk_to_pk( pk_t * rpk , const sk_t* isk )
 {
     ext_cpk_t * pk = (ext_cpk_t*)malloc(sizeof(ext_cpk_t));
     if( NULL == pk ) return -1;
@@ -247,7 +247,7 @@ int sk_to_pk( pk_t * rpk , const sk_t* isk )
     memcpy( sk , isk , sizeof(sk_t) );
     calculate_t4( sk->t4 , sk->t1 , sk->t3 );  // convert to t2
 
-    calculate_Q_from_F( pk, sk , sk );   // compute the public key in ext_cpk_t format.
+    PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_Q_from_F( pk, sk , sk );   // compute the public key in ext_cpk_t format.
     calculate_t4( sk->t4 , sk->t1 , sk->t3 );  // recover t4
 
     obfuscate_l1_polys( pk->l1_Q1 , pk->l2_Q1 , N_TRIANGLE_TERMS(_V1) , sk->s1 );
@@ -258,7 +258,7 @@ int sk_to_pk( pk_t * rpk , const sk_t* isk )
     obfuscate_l1_polys( pk->l1_Q9 , pk->l2_Q9 , N_TRIANGLE_TERMS(_O2) , sk->s1 );
     // so far, the pk contains the full pk but in ext_cpk_t format.
 
-    extcpk_to_pk( rpk , pk );     // convert the public key from ext_cpk_t to pk_t.
+    PQCLEAN_RAINBOWICLASSIC_AVX2_extcpk_to_pk( rpk , pk );     // convert the public key from ext_cpk_t to pk_t.
 
     memset( sk , 0 , sizeof(sk_t) );
     free(pk);
@@ -267,7 +267,7 @@ int sk_to_pk( pk_t * rpk , const sk_t* isk )
 }
 
 
-int generate_keypair( pk_t * rpk, sk_t* sk, const unsigned char *sk_seed )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_generate_keypair( pk_t * rpk, sk_t* sk, const unsigned char *sk_seed )
 {
     _generate_secretkey( sk , sk_seed );
 
@@ -279,7 +279,7 @@ int generate_keypair( pk_t * rpk, sk_t* sk, const unsigned char *sk_seed )
     ext_cpk_t _pk;
     ext_cpk_t * pk = &_pk;
 #endif
-    calculate_Q_from_F( pk, sk , sk );   // compute the public key in ext_cpk_t format.
+    PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_Q_from_F( pk, sk , sk );   // compute the public key in ext_cpk_t format.
     calculate_t4( sk->t4 , sk->t1 , sk->t3 );
 
     obfuscate_l1_polys( pk->l1_Q1 , pk->l2_Q1 , N_TRIANGLE_TERMS(_V1) , sk->s1 );
@@ -290,7 +290,7 @@ int generate_keypair( pk_t * rpk, sk_t* sk, const unsigned char *sk_seed )
     obfuscate_l1_polys( pk->l1_Q9 , pk->l2_Q9 , N_TRIANGLE_TERMS(_O2) , sk->s1 );
     // so far, the pk contains the full pk but in ext_cpk_t format.
 
-    extcpk_to_pk( rpk , pk );     // convert the public key from ext_cpk_t to pk_t.
+    PQCLEAN_RAINBOWICLASSIC_AVX2_extcpk_to_pk( rpk , pk );     // convert the public key from ext_cpk_t to pk_t.
 
 #if defined(_MALLOC_)
     free(pk);
@@ -309,13 +309,13 @@ int generate_keypair( pk_t * rpk, sk_t* sk, const unsigned char *sk_seed )
 
 #if defined( _RAINBOW16_36_32_32 )
 #include "crypto_core_rainbowcalsecret363232.h"
-#define calculate_F_from_Q(a,b,c)  crypto_core_rainbowcalsecret363232((unsigned char*)a,(unsigned char*)b,(unsigned char*)c,NULL)
+#define PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_F_from_Q(a,b,c)  crypto_core_rainbowcalsecret363232((unsigned char*)a,(unsigned char*)b,(unsigned char*)c,NULL)
 #elif defined( _RAINBOW256_68_32_48 )
 #include "crypto_core_rainbowcalsecret683248.h"
-#define calculate_F_from_Q(a,b,c)  crypto_core_rainbowcalsecret683248((unsigned char*)a,(unsigned char*)b,(unsigned char*)c,NULL)
+#define PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_F_from_Q(a,b,c)  crypto_core_rainbowcalsecret683248((unsigned char*)a,(unsigned char*)b,(unsigned char*)c,NULL)
 #elif defined( _RAINBOW256_96_36_64 )
 #include "crypto_core_rainbowcalsecret963664.h"
-#define calculate_F_from_Q(a,b,c)  crypto_core_rainbowcalsecret963664((unsigned char*)a,(unsigned char*)b,(unsigned char*)c,NULL)
+#define PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_F_from_Q(a,b,c)  crypto_core_rainbowcalsecret963664((unsigned char*)a,(unsigned char*)b,(unsigned char*)c,NULL)
 #else
 error.
 #endif
@@ -324,14 +324,14 @@ error.
 
 
 
-int generate_secretkey_cyclic( sk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_generate_secretkey_cyclic( sk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed )
 {
     memcpy( sk->sk_seed , sk_seed , LEN_SKSEED );
 
     // prng for sk
     prng_t _prng;
     prng_t * prng0 = &_prng;
-    prng_set( prng0 , sk_seed , LEN_SKSEED );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set( prng0 , sk_seed , LEN_SKSEED );
     generate_S_T( sk->s1 , prng0 );
     calculate_t4( sk->t4 , sk->t1 , sk->t3 );
 
@@ -344,14 +344,14 @@ int generate_secretkey_cyclic( sk_t* sk, const unsigned char *pk_seed , const un
     sk_t * Qs = &inst_Qs;
 #endif
     prng_t * prng1 = &_prng;
-    prng_set( prng1 , pk_seed , LEN_PKSEED );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set( prng1 , pk_seed , LEN_PKSEED );
     generate_B1_B2( Qs->l1_F1 , prng1 );
 
     obfuscate_l1_polys( Qs->l1_F1 , Qs->l2_F1 , N_TRIANGLE_TERMS(_V1) , sk->s1 );
     obfuscate_l1_polys( Qs->l1_F2 , Qs->l2_F2 , _V1*_O1 , sk->s1 );
 
     // calcuate the parts of sk according to pk.
-    calculate_F_from_Q( sk , Qs , sk );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_F_from_Q( sk , Qs , sk );
 
     // clean
     memset( Qs , 0 , sizeof(sk_t) );  // since Qs has benn modified by sk
@@ -364,7 +364,7 @@ int generate_secretkey_cyclic( sk_t* sk, const unsigned char *pk_seed , const un
 
 
 
-int generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed , const unsigned char *sk_seed )
 {
     memcpy( pk->pk_seed , pk_seed , LEN_PKSEED );
     memcpy( sk->sk_seed , sk_seed , LEN_SKSEED );
@@ -372,7 +372,7 @@ int generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed 
     // prng for sk
     prng_t prng;
     prng_t * prng0 = &prng;
-    prng_set( prng0 , sk_seed , LEN_SKSEED );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set( prng0 , sk_seed , LEN_SKSEED );
     generate_S_T( sk->s1 , prng0 );   // S,T:  only a part of sk
 
     unsigned char _ALIGN_(32) t2[sizeof(sk->t4)];
@@ -391,13 +391,13 @@ int generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed 
     sk_t * Qs = &_Qs;
 #endif
     prng_t * prng1 = &prng;
-    prng_set( prng1 , pk_seed , LEN_PKSEED );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set( prng1 , pk_seed , LEN_PKSEED );
     generate_B1_B2( Qs->l1_F1 , prng1 );  // generating l1_Q1, l1_Q2, l2_Q1, l2_Q2, l2_Q3, l2_Q5, l2_Q6
     obfuscate_l1_polys( Qs->l1_F1 , Qs->l2_F1 , N_TRIANGLE_TERMS(_V1) , sk->s1 );
     obfuscate_l1_polys( Qs->l1_F2 , Qs->l2_F2 , _V1*_O1 , sk->s1 );
     // so far, the Qs contains l1_F1, l1_F2, l2_F1, l2_F2, l2_F3, l2_F5, l2_F6.
 
-    calculate_F_from_Q( sk , Qs , sk );          // calcuate the rest parts of secret key from Qs and S,T
+    PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_F_from_Q( sk , Qs , sk );          // calcuate the rest parts of secret key from Qs and S,T
 
     unsigned char _ALIGN_(32) t4[sizeof(sk->t4)];
     // align space with pointer arithmetic
@@ -405,7 +405,7 @@ int generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed 
     //unsigned char * t4 = _t4 + (32-(  ((uint64_t)(&_t4[0]))  &31));
     memcpy( t4 , sk->t4 , _V1_BYTE*_O2 );        // temporarily store t4
     memcpy( sk->t4 , t2 , _V1_BYTE*_O2 );        // restore t2
-    calculate_Q_from_F_cyclic( pk, sk , sk );    // calculate the rest parts of public key: l1_Q3, l1_Q5, l1_Q6, l1_Q9, l2_Q9
+    PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_Q_from_F_cyclic( pk, sk , sk );    // calculate the rest parts of public key: l1_Q3, l1_Q5, l1_Q6, l1_Q9, l2_Q9
     memcpy( sk->t4 , t4 , _V1_BYTE*_O2 );        // restore t4
 
     obfuscate_l1_polys( pk->l1_Q3 , Qs->l2_F3 , _V1*_O2 , sk->s1 );
@@ -426,7 +426,7 @@ int generate_keypair_cyclic( cpk_t * pk, sk_t* sk, const unsigned char *pk_seed 
 
 
 
-int generate_compact_keypair_cyclic( cpk_t * pk, csk_t* rsk, const unsigned char *pk_seed , const unsigned char *sk_seed )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_generate_compact_keypair_cyclic( cpk_t * pk, csk_t* rsk, const unsigned char *pk_seed , const unsigned char *sk_seed )
 {
     memcpy( rsk->pk_seed , pk_seed , LEN_PKSEED );
     memcpy( rsk->sk_seed , sk_seed , LEN_SKSEED );
@@ -438,7 +438,7 @@ int generate_compact_keypair_cyclic( cpk_t * pk, csk_t* rsk, const unsigned char
     sk_t _sk;
     sk_t * sk = &_sk;
 #endif
-    int r = generate_keypair_cyclic( pk , sk , pk_seed , sk_seed );
+    int r = PQCLEAN_RAINBOWICLASSIC_AVX2_generate_keypair_cyclic( pk , sk , pk_seed , sk_seed );
     memset( sk , 0 , sizeof(sk_t) ); // clean
 
 #if defined(_MALLOC_)

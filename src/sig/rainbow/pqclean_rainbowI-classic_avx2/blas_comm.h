@@ -67,7 +67,7 @@ extern  "C" {
 /// @param[in,out]   b      - the vector b.
 /// @param[in]  _num_byte   - number of bytes for the vector b.
 ///
-void gf256v_set_zero(uint8_t *b, unsigned _num_byte);
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(uint8_t *b, unsigned _num_byte);
 
 
 /// @brief check if a vector is 0.
@@ -76,7 +76,7 @@ void gf256v_set_zero(uint8_t *b, unsigned _num_byte);
 /// @param[in]  _num_byte   - number of bytes for the vector a.
 /// @return  1(true) if a is 0. 0(false) else.
 ///
-unsigned gf256v_is_zero(const uint8_t *a, unsigned _num_byte);
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_is_zero(const uint8_t *a, unsigned _num_byte);
 
 
 

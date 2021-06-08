@@ -84,12 +84,12 @@ void madd_reduce( unsigned char * y , const unsigned char * tmp_res , unsigned v
     unsigned char tmp[TMPVEC_LEN];
     int accu_bit = 1;
 
-    gf256v_set_zero( y , vec_len );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( y , vec_len );
     // x1
     for(int i=1;i<_GFSIZE;i+=2) gf256v_add( y , tmp_res+TMPVEC_LEN*i , vec_len );
     // x2
     accu_bit = 1<<1; // 2
-    gf256v_set_zero( tmp , vec_len );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( tmp , vec_len );
     for(int i=accu_bit;i<_GFSIZE;i+=accu_bit*2) {
       for(int j=0;j<accu_bit;j++) gf256v_add( tmp , tmp_res+TMPVEC_LEN*(i+j) , vec_len );
     }
@@ -97,7 +97,7 @@ void madd_reduce( unsigned char * y , const unsigned char * tmp_res , unsigned v
 
     // x4
     accu_bit = 1<<2; // 4
-    gf256v_set_zero( tmp , vec_len );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( tmp , vec_len );
     for(int i=accu_bit;i<_GFSIZE;i+=accu_bit*2) {
       for(int j=0;j<accu_bit;j++) gf256v_add( tmp , tmp_res+TMPVEC_LEN*(i+j) , vec_len );
     }
@@ -105,7 +105,7 @@ void madd_reduce( unsigned char * y , const unsigned char * tmp_res , unsigned v
 
     // x8
     accu_bit = 1<<3; // 8
-    gf256v_set_zero( tmp , vec_len );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( tmp , vec_len );
     for(int i=accu_bit;i<_GFSIZE;i+=accu_bit*2) {
       for(int j=0;j<accu_bit;j++) gf256v_add( tmp , tmp_res+TMPVEC_LEN*(i+j) , vec_len );
     }
@@ -114,28 +114,28 @@ void madd_reduce( unsigned char * y , const unsigned char * tmp_res , unsigned v
 #if 256 == _GFSIZE
 
     accu_bit = 1<<4; // 16
-    gf256v_set_zero( tmp , vec_len );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( tmp , vec_len );
     for(int i=accu_bit;i<_GFSIZE;i+=accu_bit*2) {
       for(int j=0;j<accu_bit;j++) gf256v_add( tmp , tmp_res+TMPVEC_LEN*(i+j) , vec_len );
     }
     gf256v_madd( y , tmp , accu_bit ,  vec_len );
 
     accu_bit = 1<<5; // 32
-    gf256v_set_zero( tmp , vec_len );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( tmp , vec_len );
     for(int i=accu_bit;i<_GFSIZE;i+=accu_bit*2) {
       for(int j=0;j<accu_bit;j++) gf256v_add( tmp , tmp_res+TMPVEC_LEN*(i+j) , vec_len );
     }
     gf256v_madd( y , tmp , accu_bit ,  vec_len );
 
     accu_bit = 1<<6; // 64
-    gf256v_set_zero( tmp , vec_len );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( tmp , vec_len );
     for(int i=accu_bit;i<_GFSIZE;i+=accu_bit*2) {
       for(int j=0;j<accu_bit;j++) gf256v_add( tmp , tmp_res+TMPVEC_LEN*(i+j) , vec_len );
     }
     gf256v_madd( y , tmp , accu_bit ,  vec_len );
 
     accu_bit = 1<<7; // 128
-    gf256v_set_zero( tmp , vec_len );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( tmp , vec_len );
     for(int i=accu_bit;i<_GFSIZE;i+=accu_bit*2) {
       for(int j=0;j<accu_bit;j++) gf256v_add( tmp , tmp_res+TMPVEC_LEN*(i+j) , vec_len );
     }
@@ -149,7 +149,7 @@ void madd_reduce( unsigned char * y , const unsigned char * tmp_res , unsigned v
 
 
 
-void rainbow_publicmap( unsigned char * y, const unsigned char * trimat, const unsigned char * x )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_publicmap( unsigned char * y, const unsigned char * trimat, const unsigned char * x )
 {
     unsigned char tmp[TMPVEC_LEN*_GFSIZE] = {0};
     unsigned char _x[_MAX_N];
@@ -166,10 +166,10 @@ void rainbow_publicmap( unsigned char * y, const unsigned char * trimat, const u
 
 
 
-void rainbow_publicmap_cpk( unsigned char * z, const cpk_t * pk, const unsigned char *w )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_publicmap_cpk( unsigned char * z, const cpk_t * pk, const unsigned char *w )
 {
     prng_t prng0;
-    prng_set( &prng0 , pk->pk_seed , LEN_PKSEED );
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set( &prng0 , pk->pk_seed , LEN_PKSEED );
 
     // assuming:
     // 1) _O2_BYTE*(_V1*_O2) is the largest size among l1_O1, l1_Q2, ..... l2_Q1, .... l2_Q9.
@@ -189,10 +189,10 @@ error: buffer size.
     unsigned char *_o2 = _o1 + _O1;
     for(unsigned i=0;i<_PUB_N;i++) _x[i] = gfv_get_ele( w , i );
 
-    prng_gen( &prng0 , buffer , sizeof(_sk->l1_F1) ); // l1_F1
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng0 , buffer , sizeof(_sk->l1_F1) ); // l1_F1
     accu_eval_quad( tmp , buffer , _v1 , _V1 , _O1_BYTE );
 
-    prng_gen( &prng0 , buffer ,  sizeof(_sk->l1_F2) );  // l1_F2
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng0 , buffer ,  sizeof(_sk->l1_F2) );  // l1_F2
     accu_eval_quad_rect( tmp , _v1 , _V1 , buffer , _o1 , _O1 , _O1_BYTE );
 
     accu_eval_quad_rect( tmp , _v1 , _V1 , pk->l1_Q3 , _o2 , _O2 , _O1_BYTE );
@@ -206,19 +206,19 @@ error: buffer size.
     // l2
     unsigned char tmp2[TMPVEC_LEN*_GFSIZE] = {0};
 
-    prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F1) ); // l2_F1
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F1) ); // l2_F1
     accu_eval_quad( tmp2 , buffer , _v1 , _V1 , _O2_BYTE );
 
-    prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F2) ); // l2_F2
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F2) ); // l2_F2
     accu_eval_quad_rect( tmp2 , _v1 , _V1 , buffer , _o1 , _O1 , _O2_BYTE );
 
-    prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F3) ); // l2_F3
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F3) ); // l2_F3
     accu_eval_quad_rect( tmp2 , _v1 , _V1 , buffer , _o2 , _O2 , _O2_BYTE );
 
-    prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F5) ); // l2_F5
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F5) ); // l2_F5
     accu_eval_quad( tmp2 , buffer , _o1 , _O1 , _O2_BYTE );
 
-    prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F6) ); // l2_F6
+    PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen( &prng0 , buffer ,  sizeof(_sk->l2_F6) ); // l2_F6
     accu_eval_quad_rect( tmp2 , _o1 , _O1 , buffer , _o2 , _O2 , _O2_BYTE );
 
     accu_eval_quad( tmp2 , pk->l2_Q9 , _o2 , _O2 , _O2_BYTE );

@@ -6,6 +6,6 @@
 
 #include <stddef.h>
 
-int hash_msg(unsigned char *digest, size_t len_digest, const unsigned char *m, size_t mlen);
+int PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg(unsigned char *digest, size_t len_digest, const unsigned char *m, size_t mlen);
 
 #endif // _UTILS_HASH_H_

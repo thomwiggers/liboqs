@@ -26,8 +26,8 @@
 
 ///////////  matrix-vector  multiplications  ////////////////////////////////
 
-void gf16mat_prod_ref(uint8_t *c, const uint8_t *matA, unsigned n_A_vec_byte, unsigned n_A_width, const uint8_t *b) {
-    gf256v_set_zero(c, n_A_vec_byte);
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_ref(uint8_t *c, const uint8_t *matA, unsigned n_A_vec_byte, unsigned n_A_width, const uint8_t *b) {
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(c, n_A_vec_byte);
     for (unsigned i = 0; i < n_A_width; i++) {
         uint8_t bb = gf16v_get_ele(b, i);
         gf16v_madd(c, matA, bb, n_A_vec_byte);
@@ -35,8 +35,8 @@ void gf16mat_prod_ref(uint8_t *c, const uint8_t *matA, unsigned n_A_vec_byte, un
     }
 }
 
-void gf256mat_prod_ref(uint8_t *c, const uint8_t *matA, unsigned n_A_vec_byte, unsigned n_A_width, const uint8_t *b) {
-    gf256v_set_zero(c, n_A_vec_byte);
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_ref(uint8_t *c, const uint8_t *matA, unsigned n_A_vec_byte, unsigned n_A_width, const uint8_t *b) {
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(c, n_A_vec_byte);
     for (unsigned i = 0; i < n_A_width; i++) {
         gf256v_madd(c, matA, b[i], n_A_vec_byte);
         matA += n_A_vec_byte;
@@ -147,7 +147,7 @@ unsigned gf256mat_gauss_elim_ref( uint8_t * mat , unsigned h , unsigned w )
 
 
 
-unsigned gf16mat_solve_linear_eq_32x32_ref(uint8_t *sol, const uint8_t *inp_mat, const uint8_t *c_terms ) {
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_solve_linear_eq_32x32_ref(uint8_t *sol, const uint8_t *inp_mat, const uint8_t *c_terms ) {
     const unsigned vec_len = 16+_BLAS_UNIT_LEN_;
     uint8_t mat[32*vec_len];
     const unsigned n=32;
@@ -176,12 +176,12 @@ void gf16mat_submat(uint8_t *mat2, unsigned w2, unsigned st, const uint8_t *mat,
 
 
 
-unsigned gf16mat_inv_32x32_ref(uint8_t *inv_a, const uint8_t *a ) {
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_inv_32x32_ref(uint8_t *inv_a, const uint8_t *a ) {
     const unsigned H=32;
     uint8_t mat[32*32];
     for (unsigned i = 0; i < H; i++) {
         uint8_t *ai = mat + i * 32;
-        gf256v_set_zero(ai, 32 );
+        PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(ai, 32 );
         gf256v_add(ai, a + i * 16, 16);
         gf16v_set_ele(ai + 16, i, 1);
     }
@@ -203,7 +203,7 @@ void gf256mat_submat( uint8_t * mat2 , unsigned w2 , unsigned st , const uint8_t
 }
 
 
-unsigned gf256mat_solve_linear_eq_48x48_ref( uint8_t * sol , const uint8_t * inp_mat , const uint8_t * c_terms )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_solve_linear_eq_48x48_ref( uint8_t * sol , const uint8_t * inp_mat , const uint8_t * c_terms )
 {
     const unsigned n = 48;
     const unsigned vec_len = n + _BLAS_UNIT_LEN_;
@@ -216,26 +216,26 @@ unsigned gf256mat_solve_linear_eq_48x48_ref( uint8_t * sol , const uint8_t * inp
     }
     unsigned r8 = gf256mat_gauss_elim_ref( mat , n , vec_len );
     for(unsigned i=0;i<n;i++) sol[i] = mat[i*vec_len+n];
-    gf256v_set_zero(mat,n*vec_len); // clean
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(mat,n*vec_len); // clean
     return r8;
 }
 
 
 
 
-unsigned gf256mat_inv_32x32_ref( uint8_t * inv_a , const uint8_t * a )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_inv_32x32_ref( uint8_t * inv_a , const uint8_t * a )
 {
     const unsigned H=32;
     uint8_t mat[H*H*2];
     for(unsigned i=0;i<H;i++) {
         uint8_t * ai = mat + i*2*H;
-        gf256v_set_zero( ai , 2*H );
+        PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( ai , 2*H );
         gf256v_add( ai , a + i*H , H );
         ai[H+i] = 1;
     }
     unsigned char r8 = gf256mat_gauss_elim_ref( mat , H , 2*H );
     gf256mat_submat( inv_a , H , H , mat , 2*H , H );
-    gf256v_set_zero(mat,H*2*H);
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(mat,H*2*H);
     return r8;
 }
 
@@ -243,7 +243,7 @@ unsigned gf256mat_inv_32x32_ref( uint8_t * inv_a , const uint8_t * a )
 //////////////////////////////////////////////////////
 
 
-unsigned gf256mat_solve_linear_eq_64x64_ref( uint8_t * sol , const uint8_t * inp_mat , const uint8_t * c_terms )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_solve_linear_eq_64x64_ref( uint8_t * sol , const uint8_t * inp_mat , const uint8_t * c_terms )
 {
     const unsigned n = 64;
     const unsigned vec_len = n + _BLAS_UNIT_LEN_;
@@ -256,26 +256,26 @@ unsigned gf256mat_solve_linear_eq_64x64_ref( uint8_t * sol , const uint8_t * inp
     }
     unsigned r8 = gf256mat_gauss_elim_ref( mat , n , vec_len );
     for(unsigned i=0;i<n;i++) sol[i] = mat[i*vec_len+n];
-    gf256v_set_zero(mat,n*vec_len); // clean
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(mat,n*vec_len); // clean
     return r8;
 }
 
 
 
 
-unsigned gf256mat_inv_36x36_ref( uint8_t * inv_a , const uint8_t * a )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_inv_36x36_ref( uint8_t * inv_a , const uint8_t * a )
 {
     const unsigned H=36;
     uint8_t mat[H*H*2];
     for(unsigned i=0;i<H;i++) {
         uint8_t * ai = mat + i*2*H;
-        gf256v_set_zero( ai , 2*H );
+        PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( ai , 2*H );
         gf256v_add( ai , a + i*H , H );
         ai[H+i] = 1;
     }
     unsigned char r8 = gf256mat_gauss_elim_ref( mat , H , 2*H );
     gf256mat_submat( inv_a , H , H , mat , 2*H , H );
-    gf256v_set_zero(mat,H*2*H);
+    PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(mat,H*2*H);
     return r8;
 }
 

@@ -146,9 +146,9 @@ void gf256v_add_sse( uint8_t * accu_b, const uint8_t * a , unsigned _num_byte ) 
 
 
 
-extern const unsigned char __mask_low[];
+extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___mask_low[];
 extern const unsigned char * __gf16_mul;
-extern const unsigned char __gf256_mul[];
+extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul[];
 
 
 
@@ -188,8 +188,8 @@ void gf16v_madd_sse( uint8_t * accu_c, const uint8_t * a , uint8_t gf16_b, unsig
 static inline
 void gf256v_mul_scalar_sse( uint8_t * a, uint8_t _b , unsigned _num_byte ) {
 	unsigned b = _b;
-	__m128i ml = _mm_load_si128( (__m128i*) (__gf256_mul + 32*b) );
-	__m128i mh = _mm_load_si128( (__m128i*) (__gf256_mul + 32*b + 16) );
+	__m128i ml = _mm_load_si128( (__m128i*) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul + 32*b) );
+	__m128i mh = _mm_load_si128( (__m128i*) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul + 32*b + 16) );
 	__m128i mask = _mm_set1_epi8(0xf);
 
 	linearmap_8x8_sse( a, ml , mh , mask , _num_byte );
@@ -208,8 +208,8 @@ void gf256v_madd_multab_sse( uint8_t * accu_c, const uint8_t * a , const uint8_t
 static inline
 void gf256v_madd_sse( uint8_t * accu_c, const uint8_t * a , uint8_t _b, unsigned _num_byte ) {
 	unsigned b = _b;
-	__m128i ml = _mm_load_si128( (__m128i*) (__gf256_mul + 32*b) );
-	__m128i mh = _mm_load_si128( (__m128i*) (__gf256_mul + 32*b + 16) );
+	__m128i ml = _mm_load_si128( (__m128i*) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul + 32*b) );
+	__m128i mh = _mm_load_si128( (__m128i*) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul + 32*b + 16) );
 	__m128i mask = _mm_set1_epi8(0xf);
 
 	linearmap_8x8_accu_sse( accu_c , a , ml , mh , mask , _num_byte );
@@ -368,7 +368,7 @@ void gf16v_generate_multab_16_sse( uint8_t * _multab_byte , const uint8_t * _x0 
 	uint8_t multab[16*16] __attribute__((aligned(32)));
 	__m128i cc = _mm_load_si128( (__m128i*) (_x0) );
 	for(unsigned j=0;j<16;j++) {
-		__m128i mt = _mm_load_si128( (__m128i*) (__gf16_mulx2 + 32*j) );
+		__m128i mt = _mm_load_si128( (__m128i*) (PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_mulx2 + 32*j) );
 		_mm_store_si128( (__m128i*)(multab + j*16) , _mm_shuffle_epi8( mt, cc ) );
 	}
 	transpose_16x16_sse( _multab_byte , multab );
@@ -506,7 +506,7 @@ void gf256v_generate_multab_sse( uint8_t * _multabs , const uint8_t * _x , unsig
 {
 	gf16v_generate_multab_sse( _multabs , _x , 2*n );
 
-	__m128i mul_8 = _mm_load_si128( (__m128i*)(__gf16_mulx2 + 32*8) );
+	__m128i mul_8 = _mm_load_si128( (__m128i*)(PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_mulx2 + 32*8) );
 	for(unsigned i=0;i<n;i++) {
 		__m128i ml = _mm_load_si128( (__m128i*) (_multabs+32*i) );
 		__m128i mh = _mm_load_si128( (__m128i*) (_multabs+32*i+16) );

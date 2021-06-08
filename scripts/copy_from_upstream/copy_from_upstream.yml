@@ -3,7 +3,7 @@ upstreams:
     name: pqclean
     git_url: https://github.com/thomwiggers/PQClean.git
     git_branch: pqdirty-rainbow
-    git_commit: 0bde2c108d813d785e39c37cd82d0de6423dc7bb
+    git_commit: e8091e592ded24f046f8e55c6241577f78b5f713
     kem_meta_path: 'crypto_kem/{pqclean_scheme}/META.yml'
     sig_meta_path: 'crypto_sign/{pqclean_scheme}/META.yml'
     kem_scheme_path: 'crypto_kem/{pqclean_scheme}'

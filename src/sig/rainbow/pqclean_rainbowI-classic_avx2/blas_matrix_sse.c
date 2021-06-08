@@ -21,10 +21,10 @@
 #include "string.h"
 
 
-void gf16mat_prod_add_multab_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * multab ) {
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_add_multab_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * multab ) {
 	assert( n_A_vec_byte <= 512 );
 	__m128i tmp_c[32];
-	gf16mat_prod_multab_sse( (uint8_t*) tmp_c , matA , n_A_vec_byte , n_A_width , multab );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_multab_sse( (uint8_t*) tmp_c , matA , n_A_vec_byte , n_A_width , multab );
 	gf256v_add_sse( c , (uint8_t*) tmp_c , n_A_vec_byte );
 }
 
@@ -52,7 +52,7 @@ void gf16mat_prod_multab_16_sse( uint8_t * c , const uint8_t * matA , unsigned n
 
 
 
-void gf16mat_prod_multab_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * multab ) {
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_multab_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * multab ) {
 	if( 16 == n_A_vec_byte ) { gf16mat_prod_multab_16_sse(c,matA,n_A_width,multab); return; }
 	assert( n_A_vec_byte <= 512 );
 	__m128i mask_f = _mm_set1_epi8(0xf);
@@ -109,19 +109,19 @@ uint8_t _gf16v_get_ele( const uint8_t *a , unsigned i ) {
 
 #if 0
 // slower
-void gf16mat_prod_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * b ) {
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * b ) {
 	assert( n_A_width <= 128 );
 	assert( n_A_vec_byte <= 64 );
 
 	uint8_t multab[128*16] __attribute__((aligned(32)));
 	gf16v_generate_multab_sse( multab , b , n_A_width );
 
-	gf16mat_prod_multab_sse( c , matA , n_A_vec_byte , n_A_width , multab );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_multab_sse( c , matA , n_A_vec_byte , n_A_width , multab );
 }
 #endif
 
 
-void gf16mat_prod_16_sse( uint8_t * c , const uint8_t * mat_a , unsigned a_w , const uint8_t * b ) {
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_16_sse( uint8_t * c , const uint8_t * mat_a , unsigned a_w , const uint8_t * b ) {
 	assert( 0 == (a_w&0x1f) );
 	__m128i mask_f = _mm_set1_epi8(0xf);
 
@@ -150,8 +150,8 @@ void gf16mat_prod_16_sse( uint8_t * c , const uint8_t * mat_a , unsigned a_w , c
 
 
 // faster
-void gf16mat_prod_sse( uint8_t * c , const uint8_t * mat_a , unsigned a_h_byte , unsigned a_w , const uint8_t * b ) {
-	if( 16==a_h_byte && (0==(a_w&0x1f)) ) { gf16mat_prod_16_sse(c,mat_a,a_w,b); return; }
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_sse( uint8_t * c , const uint8_t * mat_a , unsigned a_h_byte , unsigned a_w , const uint8_t * b ) {
+	if( 16==a_h_byte && (0==(a_w&0x1f)) ) { PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_16_sse(c,mat_a,a_w,b); return; }
 
 	assert( a_w <= 224 );
 	assert( a_h_byte <= 512 );
@@ -214,7 +214,7 @@ void gf16mat_prod_sse( uint8_t * c , const uint8_t * mat_a , unsigned a_h_byte ,
 
 
 
-void gf256mat_prod_add_multab_sse( __m128i * r , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * multab ) {
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_add_multab_sse( __m128i * r , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * multab ) {
 	__m128i mask_f = _mm_set1_epi8(0xf);
 	unsigned n_xmm = ((n_A_vec_byte + 15)>>4);
 
@@ -231,15 +231,15 @@ void gf256mat_prod_add_multab_sse( __m128i * r , const uint8_t * matA , unsigned
 }
 
 
-void gf256mat_prod_multab_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * multab ) {
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_multab_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * multab ) {
 	assert( n_A_vec_byte <= 64*64 );
 
 	__m128i r[64*64/16];
 	unsigned n_xmm = ((n_A_vec_byte + 15)>>4);
 	for(unsigned i=0;i<n_xmm;i++) r[i] = _mm_setzero_si128();
 
-	if(0==n_A_width) { gf256v_set_zero(c,n_A_vec_byte);  return; }
-	if(1 < n_A_width) gf256mat_prod_add_multab_sse( r , matA, n_A_vec_byte , n_A_width - 1 , multab );
+	if(0==n_A_width) { PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero(c,n_A_vec_byte);  return; }
+	if(1 < n_A_width) PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_add_multab_sse( r , matA, n_A_vec_byte , n_A_width - 1 , multab );
 
 	// last column
 	__m128i mask_f = _mm_set1_epi8(0xf);
@@ -262,12 +262,12 @@ void gf256mat_prod_multab_sse( uint8_t * c , const uint8_t * matA , unsigned n_A
 }
 
 
-void gf256mat_prod_add_sse( __m128i * r , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * b ) {
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_add_sse( __m128i * r , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * b ) {
 
 	uint8_t multab[16*16*2] __attribute__((aligned(32)));
 	while( 16 < n_A_width ){
 		gf256v_generate_multab_sse( multab , b , 16 );
-		gf256mat_prod_add_multab_sse( r , matA , n_A_vec_byte , 16 , multab );
+		PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_add_multab_sse( r , matA , n_A_vec_byte , 16 , multab );
 		matA += n_A_vec_byte*16;
 		b += 16;
 		n_A_width -= 16;
@@ -277,7 +277,7 @@ void gf256mat_prod_add_sse( __m128i * r , const uint8_t * matA , unsigned n_A_ve
 	for(unsigned i=0;i<n_A_width;i++) b_16[i]=b[i];
 	gf256v_generate_multab_sse( multab , b_16 , 16 );
 	if(0 == n_A_width ){ return; }
-	if(1 < n_A_width) gf256mat_prod_add_multab_sse( r , matA, n_A_vec_byte , n_A_width - 1 , multab );
+	if(1 < n_A_width) PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_add_multab_sse( r , matA, n_A_vec_byte , n_A_width - 1 , multab );
 	// last column
 	__m128i mask_f = _mm_set1_epi8(0xf);
 	unsigned n_16 = (n_A_vec_byte>>4);
@@ -297,14 +297,14 @@ void gf256mat_prod_add_sse( __m128i * r , const uint8_t * matA , unsigned n_A_ve
 }
 
 
-void gf256mat_prod_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * b ) {
+void PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_sse( uint8_t * c , const uint8_t * matA , unsigned n_A_vec_byte , unsigned n_A_width , const uint8_t * b ) {
 	assert( n_A_vec_byte <= 48*48 );
 
 	__m128i r[48*48/16];
 	unsigned n_xmm = ((n_A_vec_byte + 15)>>4);
 	for(unsigned i=0;i<n_xmm;i++) r[i] = _mm_setzero_si128();
 
-	gf256mat_prod_add_sse( r , matA , n_A_vec_byte , n_A_width , b );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_add_sse( r , matA , n_A_vec_byte , n_A_width , b );
 
 	unsigned n_16 = (n_A_vec_byte>>4);
 	unsigned n_16_rem = n_A_vec_byte&0xf;
@@ -398,7 +398,7 @@ unsigned _gf16mat_gauss_elim_sse( uint8_t * mat , unsigned h , unsigned w_byte )
 
 
 
-unsigned gf16mat_inv_32x32_sse( uint8_t * inv_a , const uint8_t * mat_a )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_inv_32x32_sse( uint8_t * inv_a , const uint8_t * mat_a )
 {
 	//const unsigned h=32;
 
@@ -410,20 +410,20 @@ unsigned gf16mat_inv_32x32_sse( uint8_t * inv_a , const uint8_t * mat_a )
 	unsigned r8 = _gf16mat_gauss_elim_sse( mat , 32 , 32 );
 	for(unsigned i=0;i<32;i++) memcpy( inv_a + i*16 , mat + i*32 + 16 , 16 );
 
-	gf256v_set_zero( mat , 32*32 );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( mat , 32*32 );
 	return r8;
 }
 
 
-unsigned gf16mat_solve_linear_eq_32x32_sse( uint8_t * sol , const uint8_t * inp_mat , const uint8_t * c_terms )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_solve_linear_eq_32x32_sse( uint8_t * sol , const uint8_t * inp_mat , const uint8_t * c_terms )
 {
 	//const unsigned n = 32;
 
 	uint8_t mat[ 32*16 ] __attribute__((aligned(32)));
-	unsigned r8 = gf16mat_inv_32x32_sse( mat , inp_mat );
-	gf16mat_prod_sse( sol , mat , 16 , 32 , c_terms );
+	unsigned r8 = PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_inv_32x32_sse( mat , inp_mat );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_sse( sol , mat , 16 , 32 , c_terms );
 
-	gf256v_set_zero( mat , 32*16 );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( mat , 32*16 );
 	return r8;
 }
 
@@ -504,7 +504,7 @@ unsigned _gf256mat_gauss_elim_sse( uint8_t * mat , unsigned h , unsigned w )
 ///////////////////////////////////////
 
 
-unsigned gf256mat_inv_32x32_sse( uint8_t * inv_a , const uint8_t * mat_a )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_inv_32x32_sse( uint8_t * inv_a , const uint8_t * mat_a )
 {
 	const unsigned h = 32;
 	const unsigned vec_len = 64;
@@ -517,11 +517,11 @@ unsigned gf256mat_inv_32x32_sse( uint8_t * inv_a , const uint8_t * mat_a )
 	unsigned r = _gf256mat_gauss_elim_sse( mat , h , vec_len );
 	for(unsigned i=0;i<h;i++) memcpy( inv_a+i*h , mat+i*vec_len+h , h );
 
-	gf256v_set_zero( mat , h*vec_len );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( mat , h*vec_len );
 	return r;
 }
 
-unsigned gf256mat_solve_linear_eq_48x48_sse( uint8_t * sol , const uint8_t * mat_a , const uint8_t * c_terms )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_solve_linear_eq_48x48_sse( uint8_t * sol , const uint8_t * mat_a , const uint8_t * c_terms )
 {
 	const unsigned h = 48;
 	const unsigned vec_len = 96;
@@ -533,9 +533,9 @@ unsigned gf256mat_solve_linear_eq_48x48_sse( uint8_t * sol , const uint8_t * mat
 	}
 	unsigned r = _gf256mat_gauss_elim_sse( mat , h , vec_len );
 	for(unsigned i=0;i<h;i++) memcpy( mat+i*h , mat+i*vec_len+h , h );
-	gf256mat_prod_sse( sol , mat , h , h , c_terms );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_sse( sol , mat , h , h , c_terms );
 
-	gf256v_set_zero( mat , h*vec_len );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( mat , h*vec_len );
 	return r;
 }
 
@@ -543,7 +543,7 @@ unsigned gf256mat_solve_linear_eq_48x48_sse( uint8_t * sol , const uint8_t * mat
 ////////////////////////////////////////
 
 
-unsigned gf256mat_inv_36x36_sse( uint8_t * inv_a , const uint8_t * mat_a )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_inv_36x36_sse( uint8_t * inv_a , const uint8_t * mat_a )
 {
 	const unsigned h = 36;
 	const unsigned vec_len = 80;
@@ -556,11 +556,11 @@ unsigned gf256mat_inv_36x36_sse( uint8_t * inv_a , const uint8_t * mat_a )
 	unsigned r = _gf256mat_gauss_elim_sse( mat , h , vec_len );
 	for(unsigned i=0;i<h;i++) memcpy( inv_a+i*h , mat+i*vec_len+h , h );
 
-	gf256v_set_zero( mat , h*vec_len );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( mat , h*vec_len );
 	return r;
 }
 
-unsigned gf256mat_solve_linear_eq_64x64_sse( uint8_t * sol , const uint8_t * mat_a , const uint8_t * c_terms )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_solve_linear_eq_64x64_sse( uint8_t * sol , const uint8_t * mat_a , const uint8_t * c_terms )
 {
 	const unsigned h = 64;
 	const unsigned vec_len = 128;
@@ -572,9 +572,9 @@ unsigned gf256mat_solve_linear_eq_64x64_sse( uint8_t * sol , const uint8_t * mat
 	}
 	unsigned r = _gf256mat_gauss_elim_sse( mat , h , vec_len );
 	for(unsigned i=0;i<h;i++) memcpy( mat+i*h , mat+i*vec_len+h , h );
-	gf256mat_prod_sse( sol , mat , h , h , c_terms );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_sse( sol , mat , h , h , c_terms );
 
-	gf256v_set_zero( mat , h*vec_len );
+	PQCLEAN_RAINBOWICLASSIC_AVX2_gf256v_set_zero( mat , h*vec_len );
 	return r;
 }
 

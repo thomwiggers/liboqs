@@ -78,13 +78,13 @@ static int randombytes_with_state(prng_t *state,
     return 0;
 }
 
-int prng_set(prng_t *ctx, const void *prng_seed, unsigned long prng_seedlen) {
+int PQCLEAN_RAINBOWICLASSIC_AVX2_prng_set(prng_t *ctx, const void *prng_seed, unsigned long prng_seedlen) {
     unsigned char seed[48];
     if (prng_seedlen >= 48) {
         memcpy(seed, prng_seed, 48);
     } else {
         memcpy(seed, prng_seed, prng_seedlen);
-        hash_msg(seed + prng_seedlen, 48 - (unsigned)prng_seedlen, (const unsigned char *)prng_seed, prng_seedlen);
+        PQCLEAN_RAINBOWICLASSIC_AVX2_hash_msg(seed + prng_seedlen, 48 - (unsigned)prng_seedlen, (const unsigned char *)prng_seed, prng_seedlen);
     }
 
     randombytes_init_with_state(ctx, seed);
@@ -92,6 +92,6 @@ int prng_set(prng_t *ctx, const void *prng_seed, unsigned long prng_seedlen) {
     return 0;
 }
 
-int prng_gen(prng_t *ctx, unsigned char *out, unsigned long outlen) {
+int PQCLEAN_RAINBOWICLASSIC_AVX2_prng_gen(prng_t *ctx, unsigned char *out, unsigned long outlen) {
     return randombytes_with_state(ctx, out, outlen);
 }

@@ -23,7 +23,7 @@ extern  "C" {
 /// @param[in]  digest    - the digest.
 /// @return 0 for success. -1 otherwise.
 ///
-int rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * digest );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * digest );
 
 ///
 /// @brief Verifying function.
@@ -33,7 +33,7 @@ int rainbow_sign( uint8_t * signature , const sk_t * sk , const uint8_t * digest
 /// @param[in]  pk        - the public key.
 /// @return 0 for successful verified. -1 for failed verification.
 ///
-int rainbow_verify( const uint8_t * digest , const uint8_t * signature , const pk_t * pk );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_verify( const uint8_t * digest , const uint8_t * signature , const pk_t * pk );
 
 
 ///
@@ -44,7 +44,7 @@ int rainbow_verify( const uint8_t * digest , const uint8_t * signature , const p
 /// @param[in]  digest    - the digest.
 /// @return 0 for success. -1 otherwise.
 ///
-int rainbow_sign_cyclic( uint8_t * signature , const csk_t * sk , const uint8_t * digest );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_sign_cyclic( uint8_t * signature , const csk_t * sk , const uint8_t * digest );
 
 ///
 /// @brief Verifying function for cyclic public keys.
@@ -54,7 +54,7 @@ int rainbow_sign_cyclic( uint8_t * signature , const csk_t * sk , const uint8_t 
 /// @param[in]  pk        - the public key of cyclic rainbow.
 /// @return 0 for successful verified. -1 for failed verification.
 ///
-int rainbow_verify_cyclic( const uint8_t * digest , const uint8_t * signature , const cpk_t * pk );
+int PQCLEAN_RAINBOWICLASSIC_AVX2_rainbow_verify_cyclic( const uint8_t * digest , const uint8_t * signature , const cpk_t * pk );
 
 
 

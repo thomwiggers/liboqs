@@ -11,7 +11,7 @@
 
 
 
-int byte_fdump(FILE * fp, const char * extra_msg , const unsigned char *v, unsigned n_byte)
+int PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fdump(FILE * fp, const char * extra_msg , const unsigned char *v, unsigned n_byte)
 {
 	int r = 0;
 	int t = fprintf( fp , "%s = ", extra_msg );
@@ -36,7 +36,7 @@ int is_empty( char c )
 	return 0;
 }
 
-unsigned byte_fget( FILE * fp, unsigned char *v , unsigned n_byte )
+unsigned PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fget( FILE * fp, unsigned char *v , unsigned n_byte )
 {
 	char c0 = 0, c1 = 0;
 	char vv[3]; vv[2] = '\0';
@@ -71,11 +71,11 @@ unsigned byte_fget( FILE * fp, unsigned char *v , unsigned n_byte )
 
 
 
-int byte_from_file( unsigned char *v , unsigned n_byte , const char * f_name )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_byte_from_file( unsigned char *v , unsigned n_byte , const char * f_name )
 {
 	FILE * fp = fopen( f_name , "r");
 	if( NULL == fp ) return -1;
-	unsigned r = byte_fget( fp ,  v , n_byte );
+	unsigned r = PQCLEAN_RAINBOWICLASSIC_AVX2_byte_fget( fp ,  v , n_byte );
 	fclose( fp );
 	if( r != n_byte ) return -2;
 	return 0;
@@ -83,7 +83,7 @@ int byte_from_file( unsigned char *v , unsigned n_byte , const char * f_name )
 
 
 
-int byte_from_binfile( unsigned char *v , unsigned n_byte , const char * f_name )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_byte_from_binfile( unsigned char *v , unsigned n_byte , const char * f_name )
 {
 	FILE * fp = fopen( f_name , "r");
 	if( NULL == fp ) return -1;
@@ -99,7 +99,7 @@ int byte_from_binfile( unsigned char *v , unsigned n_byte , const char * f_name 
 
 
 
-int byte_read_file( unsigned char ** msg , unsigned long long * len , const char * f_name )
+int PQCLEAN_RAINBOWICLASSIC_AVX2_byte_read_file( unsigned char ** msg , unsigned long long * len , const char * f_name )
 {
 
 	if( NULL == msg[0] ) {

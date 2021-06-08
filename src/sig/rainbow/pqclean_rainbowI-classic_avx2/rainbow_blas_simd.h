@@ -23,28 +23,28 @@ error here.
 #ifdef _USE_GF16
 
 #define gfv_generate_multab            gf16v_generate_multab_sse
-#define gfmat_prod_multab              gf16mat_prod_multab_avx2
-#define batch_quad_trimat_eval_multab  batch_quad_trimat_eval_multab_gf16_avx2
+#define gfmat_prod_multab              PQCLEAN_RAINBOWICLASSIC_AVX2_gf16mat_prod_multab_avx2
+#define batch_quad_trimat_eval_multab  PQCLEAN_RAINBOWICLASSIC_AVX2_batch_quad_trimat_eval_multab_gf16_avx2
 
-#define batch_trimat_madd_multab    batch_trimat_madd_multab_gf16_avx2
-#define batch_trimatTr_madd_multab  batch_trimatTr_madd_multab_gf16_avx2
-#define batch_2trimat_madd_multab   batch_2trimat_madd_multab_gf16_avx2
-#define batch_matTr_madd_multab     batch_matTr_madd_multab_gf16_avx2
-#define batch_bmatTr_madd_multab    batch_bmatTr_madd_multab_gf16_avx2
-#define batch_mat_madd_multab       batch_mat_madd_multab_gf16_avx2
+#define batch_trimat_madd_multab    PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimat_madd_multab_gf16_avx2
+#define batch_trimatTr_madd_multab  PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimatTr_madd_multab_gf16_avx2
+#define batch_2trimat_madd_multab   PQCLEAN_RAINBOWICLASSIC_AVX2_batch_2trimat_madd_multab_gf16_avx2
+#define batch_matTr_madd_multab     PQCLEAN_RAINBOWICLASSIC_AVX2_batch_matTr_madd_multab_gf16_avx2
+#define batch_bmatTr_madd_multab    PQCLEAN_RAINBOWICLASSIC_AVX2_batch_bmatTr_madd_multab_gf16_avx2
+#define batch_mat_madd_multab       PQCLEAN_RAINBOWICLASSIC_AVX2_batch_mat_madd_multab_gf16_avx2
 
 #else
 
 #define gfv_generate_multab            gf256v_generate_multab_sse
-#define gfmat_prod_multab              gf256mat_prod_multab_avx2
-#define batch_quad_trimat_eval_multab  batch_quad_trimat_eval_multab_gf256_avx2
+#define gfmat_prod_multab              PQCLEAN_RAINBOWICLASSIC_AVX2_gf256mat_prod_multab_avx2
+#define batch_quad_trimat_eval_multab  PQCLEAN_RAINBOWICLASSIC_AVX2_batch_quad_trimat_eval_multab_gf256_avx2
 
-#define batch_trimat_madd_multab    batch_trimat_madd_multab_gf256_avx2
-#define batch_trimatTr_madd_multab  batch_trimatTr_madd_multab_gf256_avx2
-#define batch_2trimat_madd_multab   batch_2trimat_madd_multab_gf256_avx2
-#define batch_matTr_madd_multab     batch_matTr_madd_multab_gf256_avx2
-#define batch_bmatTr_madd_multab    batch_bmatTr_madd_multab_gf256_avx2
-#define batch_mat_madd_multab       batch_mat_madd_multab_gf256_avx2
+#define batch_trimat_madd_multab    PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimat_madd_multab_gf256_avx2
+#define batch_trimatTr_madd_multab  PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimatTr_madd_multab_gf256_avx2
+#define batch_2trimat_madd_multab   PQCLEAN_RAINBOWICLASSIC_AVX2_batch_2trimat_madd_multab_gf256_avx2
+#define batch_matTr_madd_multab     PQCLEAN_RAINBOWICLASSIC_AVX2_batch_matTr_madd_multab_gf256_avx2
+#define batch_bmatTr_madd_multab    PQCLEAN_RAINBOWICLASSIC_AVX2_batch_bmatTr_madd_multab_gf256_avx2
+#define batch_mat_madd_multab       PQCLEAN_RAINBOWICLASSIC_AVX2_batch_mat_madd_multab_gf256_avx2
 
 #endif
 

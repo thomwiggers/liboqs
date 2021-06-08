@@ -382,6 +382,12 @@ endif()
 endif()
 
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_I_circumzenithal "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)
+if(CMAKE_SYSTEM_NAME MATCHES "Linux|Darwin")
+if(OQS_DIST_X86_64_BUILD OR (OQS_USE_AVX2_INSTRUCTIONS))
+    cmake_dependent_option(OQS_ENABLE_SIG_rainbow_I_circumzenithal_avx2 "" ON "OQS_ENABLE_SIG_rainbow_I_circumzenithal" OFF)
+endif()
+endif()
+
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_I_compressed "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_III_classic "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)
 cmake_dependent_option(OQS_ENABLE_SIG_rainbow_III_circumzenithal "" ON "OQS_ENABLE_SIG_RAINBOW" OFF)

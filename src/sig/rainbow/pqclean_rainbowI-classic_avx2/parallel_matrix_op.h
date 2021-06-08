@@ -64,7 +64,7 @@ unsigned idx_of_2trimat( unsigned i_row , unsigned j_col , unsigned n_var )
 /// @param[in]   bwidth   - the width of the batched matrix A, i.e., A is a Awidth x Awidth matrix.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void UpperTrianglize( unsigned char * btriC , const unsigned char * bA , unsigned Awidth, unsigned size_batch );
+void PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( unsigned char * btriC , const unsigned char * bA , unsigned Awidth, unsigned size_batch );
 
 
 
@@ -84,7 +84,7 @@ void UpperTrianglize( unsigned char * btriC , const unsigned char * bA , unsigne
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_trimat_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimat_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch );
 
 ///
@@ -98,7 +98,7 @@ void batch_trimat_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_trimat_madd_gf256( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimat_madd_gf256( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch );
 
 
@@ -113,7 +113,7 @@ void batch_trimat_madd_gf256( unsigned char * bC , const unsigned char* btriA ,
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_trimatTr_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimatTr_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch );
 
 ///
@@ -127,7 +127,7 @@ void batch_trimatTr_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_trimatTr_madd_gf256( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_trimatTr_madd_gf256( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch );
 
 
@@ -143,7 +143,7 @@ void batch_trimatTr_madd_gf256( unsigned char * bC , const unsigned char* btriA 
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_2trimat_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_2trimat_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch );
 
 ///
@@ -157,7 +157,7 @@ void batch_2trimat_madd_gf16( unsigned char * bC , const unsigned char* btriA ,
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_2trimat_madd_gf256( unsigned char * bC , const unsigned char* btriA ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_2trimat_madd_gf256( unsigned char * bC , const unsigned char* btriA ,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch );
 
 
@@ -174,7 +174,7 @@ void batch_2trimat_madd_gf256( unsigned char * bC , const unsigned char* btriA ,
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_matTr_madd_gf16( unsigned char * bC ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_matTr_madd_gf16( unsigned char * bC ,
         const unsigned char* A_to_tr , unsigned Aheight, unsigned size_Acolvec, unsigned Awidth,
         const unsigned char* bB, unsigned Bwidth, unsigned size_batch );
 
@@ -190,7 +190,7 @@ void batch_matTr_madd_gf16( unsigned char * bC ,
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_matTr_madd_gf256( unsigned char * bC ,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_matTr_madd_gf256( unsigned char * bC ,
         const unsigned char* A_to_tr , unsigned Aheight, unsigned size_Acolvec, unsigned Awidth,
         const unsigned char* bB, unsigned Bwidth, unsigned size_batch );
 
@@ -207,7 +207,7 @@ void batch_matTr_madd_gf256( unsigned char * bC ,
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_bmatTr_madd_gf16( unsigned char *bC , const unsigned char *bA_to_tr, unsigned Awidth_before_tr,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_bmatTr_madd_gf16( unsigned char *bC , const unsigned char *bA_to_tr, unsigned Awidth_before_tr,
         const unsigned char *B, unsigned Bheight, unsigned size_Bcolvec, unsigned Bwidth, unsigned size_batch );
 
 ///
@@ -222,7 +222,7 @@ void batch_bmatTr_madd_gf16( unsigned char *bC , const unsigned char *bA_to_tr, 
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_bmatTr_madd_gf256( unsigned char *bC , const unsigned char *bA_to_tr, unsigned Awidth_before_tr,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_bmatTr_madd_gf256( unsigned char *bC , const unsigned char *bA_to_tr, unsigned Awidth_before_tr,
         const unsigned char *B, unsigned Bheight, unsigned size_Bcolvec, unsigned Bwidth, unsigned size_batch );
 
 ///
@@ -237,7 +237,7 @@ void batch_bmatTr_madd_gf256( unsigned char *bC , const unsigned char *bA_to_tr,
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_mat_madd_gf16( unsigned char * bC , const unsigned char* bA , unsigned Aheight,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_mat_madd_gf16( unsigned char * bC , const unsigned char* bA , unsigned Aheight,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch );
 
 ///
@@ -252,7 +252,7 @@ void batch_mat_madd_gf16( unsigned char * bC , const unsigned char* bA , unsigne
 /// @param[in]   Bwidth           - the width of B.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_mat_madd_gf256( unsigned char * bC , const unsigned char* bA , unsigned Aheight,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_mat_madd_gf256( unsigned char * bC , const unsigned char* bA , unsigned Aheight,
         const unsigned char* B , unsigned Bheight, unsigned size_Bcolvec , unsigned Bwidth, unsigned size_batch );
 
 
@@ -269,7 +269,7 @@ void batch_mat_madd_gf256( unsigned char * bC , const unsigned char* bA , unsign
 /// @param[in]   dim        - the dimension of matrix trimat (and x).
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_quad_trimat_eval_gf16( unsigned char * y, const unsigned char * trimat, const unsigned char * x, unsigned dim , unsigned size_batch );
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_quad_trimat_eval_gf16( unsigned char * y, const unsigned char * trimat, const unsigned char * x, unsigned dim , unsigned size_batch );
 
 ///
 /// @brief  y =  x^Tr * trimat * x  , in GF(256)
@@ -280,7 +280,7 @@ void batch_quad_trimat_eval_gf16( unsigned char * y, const unsigned char * trima
 /// @param[in]   dim        - the dimension of matrix trimat (and x).
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_quad_trimat_eval_gf256( unsigned char * y, const unsigned char * trimat, const unsigned char * x, unsigned dim , unsigned size_batch );
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_quad_trimat_eval_gf256( unsigned char * y, const unsigned char * trimat, const unsigned char * x, unsigned dim , unsigned size_batch );
 
 
 ///
@@ -294,7 +294,7 @@ void batch_quad_trimat_eval_gf256( unsigned char * y, const unsigned char * trim
 /// @param[in]   dim_x        - the length of x.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_quad_recmat_eval_gf16( unsigned char * z, const unsigned char * y, unsigned dim_y,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_quad_recmat_eval_gf16( unsigned char * z, const unsigned char * y, unsigned dim_y,
         const unsigned char * mat, const unsigned char * x, unsigned dim_x , unsigned size_batch );
 
 ///
@@ -308,7 +308,7 @@ void batch_quad_recmat_eval_gf16( unsigned char * z, const unsigned char * y, un
 /// @param[in]   dim_x        - the length of x.
 /// @param[in]   size_batch - number of the batched elements in the corresponding position of the matrix.
 ///
-void batch_quad_recmat_eval_gf256( unsigned char * z, const unsigned char * y, unsigned dim_y,
+void PQCLEAN_RAINBOWICLASSIC_AVX2_batch_quad_recmat_eval_gf256( unsigned char * z, const unsigned char * y, unsigned dim_y,
         const unsigned char * mat, const unsigned char * x, unsigned dim_x , unsigned size_batch );
 
 

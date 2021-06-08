@@ -20,7 +20,7 @@
 
 
 
-void extcpk_to_pk( pk_t * pk , const ext_cpk_t * cpk )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_extcpk_to_pk( pk_t * pk , const ext_cpk_t * cpk )
 {
     const unsigned char * idx_l1 = cpk->l1_Q1;
     const unsigned char * idx_l2 = cpk->l2_Q1;
@@ -99,9 +99,9 @@ void extcpk_to_pk( pk_t * pk , const ext_cpk_t * cpk )
 // Choosing implementations depends on the macros: _BLAS_SSE_ and _BLAS_AVX2_
 #if defined(_BLAS_SSE_) || defined(_BLAS_AVX2_)
 #include "rainbow_keypair_computation_simd.h"
-#define calculate_Q_from_F_impl        calculate_Q_from_F_simd
-#define calculate_F_from_Q_impl        calculate_F_from_Q_simd
-#define calculate_Q_from_F_cyclic_impl calculate_Q_from_F_cyclic_simd
+#define calculate_Q_from_F_impl        PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_Q_from_F_simd
+#define calculate_F_from_Q_impl        PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_F_from_Q_simd
+#define calculate_Q_from_F_cyclic_impl PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_Q_from_F_cyclic_simd
 
 #else
 
@@ -149,7 +149,7 @@ error: incorrect buffer size.
 
     memset( tempQ , 0 , _O1_BYTE * _O1 * _O1 );   // l1_Q5
     batch_matTr_madd( tempQ , Ts->t1 , _V1, _V1_BYTE, _O1, Qs->l1_Q2, _O1, _O1_BYTE );  // t1_tr*(F1*T1 + F2)
-    UpperTrianglize( Qs->l1_Q5 , tempQ , _O1, _O1_BYTE );    // UT( ... )   // Q5
+    PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( Qs->l1_Q5 , tempQ , _O1, _O1_BYTE );    // UT( ... )   // Q5
 
     batch_trimatTr_madd( Qs->l1_Q2 , Fs->l1_F1 , Ts->t1 , _V1, _V1_BYTE , _O1, _O1_BYTE );    // Q2
 /*
@@ -166,7 +166,7 @@ error: incorrect buffer size.
 
     memset( tempQ , 0 , _O1_BYTE * _O2 * _O2 );                                              // l1_Q9
     batch_matTr_madd( tempQ , t2 , _V1, _V1_BYTE, _O2, Qs->l1_Q3, _O2, _O1_BYTE );           // T2tr * ( F1_T2 + F2_T3 )
-    UpperTrianglize( Qs->l1_Q9 , tempQ , _O2 , _O1_BYTE );                                   // Q9
+    PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( Qs->l1_Q9 , tempQ , _O2 , _O1_BYTE );                                   // Q9
 
     batch_trimatTr_madd( Qs->l1_Q3 , Fs->l1_F1 , t2 , _V1, _V1_BYTE, _O2, _O1_BYTE );        // F1_F1T_T2 + F2_T3  // Q3
 
@@ -188,7 +188,7 @@ error: incorrect buffer size.
     memcpy( Qs->l2_Q5 , Fs->l2_F5 , _O2_BYTE * N_TRIANGLE_TERMS(_O1) );
     memset( tempQ , 0 , _O2_BYTE * _O1 * _O1 );                                               // l2_Q5
     batch_matTr_madd( tempQ , Ts->t1 , _V1, _V1_BYTE, _O1, Qs->l2_Q2, _O1, _O2_BYTE );        // t1_tr*(F1*T1 + F2)
-    UpperTrianglize( Qs->l2_Q5 , tempQ , _O1, _O2_BYTE );                                     // UT( ... )   // Q5
+    PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( Qs->l2_Q5 , tempQ , _O1, _O2_BYTE );                                     // UT( ... )   // Q5
 
     batch_trimatTr_madd( Qs->l2_Q2 , Fs->l2_F1 , Ts->t1 , _V1, _V1_BYTE , _O1, _O2_BYTE );    // Q2
 
@@ -214,7 +214,7 @@ error: incorrect buffer size.
     batch_trimat_madd( Qs->l2_Q6 , Fs->l2_F5 , Ts->t3 , _O1, _O1_BYTE, _O2, _O2_BYTE );      // F5*T3 + F6
     batch_matTr_madd( tempQ , Ts->t3 , _O1, _O1_BYTE, _O2, Qs->l2_Q6, _O2, _O2_BYTE );       // T2tr*( ..... ) + T3tr*( ..... )
     memset( Qs->l2_Q9 , 0 , _O2_BYTE * N_TRIANGLE_TERMS(_O2) );
-    UpperTrianglize( Qs->l2_Q9 , tempQ , _O2 , _O2_BYTE );                                   // Q9
+    PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( Qs->l2_Q9 , tempQ , _O2 , _O2_BYTE );                                   // Q9
 
     batch_trimatTr_madd( Qs->l2_Q3 , Fs->l2_F1 , t2 , _V1, _V1_BYTE, _O2, _O2_BYTE );        // F1_F1T_T2 + F2_T3 + F3 // Q3
 
@@ -272,7 +272,7 @@ void calculate_F_from_Q_ref( sk_t * Fs , const sk_t * Qs , const sk_t * Ts )
     unsigned char _ALIGN_(32) tempQ[_O1*_O1*_O2_BYTE] = {0};
     batch_matTr_madd( tempQ , Ts->t1 , _V1, _V1_BYTE, _O1, Fs->l2_F2, _O1, _O2_BYTE );     // t1_tr*(Q1_T1+Q2)
     memcpy( Fs->l2_F5, Qs->l2_F5, _O2_BYTE * N_TRIANGLE_TERMS(_O1) );                      // F5
-    UpperTrianglize( Fs->l2_F5 , tempQ , _O1, _O2_BYTE );                                  // UT( ... )
+    PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( Fs->l2_F5 , tempQ , _O1, _O2_BYTE );                                  // UT( ... )
     memset( tempQ , 0 , _O1*_O1*_O2_BYTE );
 
     batch_trimatTr_madd( Fs->l2_F2 , Qs->l2_F1 , Ts->t1 , _V1, _V1_BYTE , _O1, _O2_BYTE );  // F2 = Q1_T1 + Q2 + Q1^tr*t1
@@ -317,7 +317,7 @@ void calculate_Q_from_F_cyclic_ref( cpk_t * Qs, const sk_t * Fs , const sk_t * T
     memset( buffer_F3 , 0 , _O1_BYTE * _V1 * _O2 );
     batch_matTr_madd( buffer_F3 , Ts->t1 , _V1, _V1_BYTE, _O1, buffer_F2, _O1, _O1_BYTE );  // T1tr*(F1*T1 + F2) , release buffer_F2
     memset( Qs->l1_Q5 , 0 , _O1_BYTE * N_TRIANGLE_TERMS(_O1) );
-    UpperTrianglize( Qs->l1_Q5 , buffer_F3 , _O1, _O1_BYTE );                        // UT( ... )   // Q5 , release buffer_F3
+    PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( Qs->l1_Q5 , buffer_F3 , _O1, _O1_BYTE );                        // UT( ... )   // Q5 , release buffer_F3
 
 /*
     F1_T2     = F1 * t2
@@ -336,7 +336,7 @@ void calculate_Q_from_F_cyclic_ref( cpk_t * Qs, const sk_t * Fs , const sk_t * T
 
     memset( buffer_F3 , 0 , _O1_BYTE * _V1 * _O2 );
     batch_matTr_madd( buffer_F3 , t2 , _V1, _V1_BYTE, _O2, Qs->l1_Q3, _O2, _O1_BYTE );    // T2tr *  ( F1_T2 + F2_T3 )
-    UpperTrianglize( Qs->l1_Q9 , buffer_F3 , _O2 , _O1_BYTE );                            // Q9 , release buffer_F3
+    PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( Qs->l1_Q9 , buffer_F3 , _O2 , _O1_BYTE );                            // Q9 , release buffer_F3
 
     batch_trimatTr_madd( Qs->l1_Q3 , Fs->l1_F1 , t2 , _V1, _V1_BYTE, _O2, _O1_BYTE );       // F1_F1T_T2 + F2_T3  // Q3
 
@@ -371,7 +371,7 @@ error: incorrect buffer size.
 
     batch_matTr_madd( buffer_F2 , Ts->t3 , _O1, _O1_BYTE, _O2, buffer_F3, _O2, _O2_BYTE ); // T2tr*( ..... ) + T3tr*( ..... )
     memset( Qs->l2_Q9 , 0 , _O2_BYTE * N_TRIANGLE_TERMS(_O2) );
-    UpperTrianglize( Qs->l2_Q9 , buffer_F2 , _O2 , _O2_BYTE );                              // Q9
+    PQCLEAN_RAINBOWICLASSIC_AVX2_UpperTrianglize( Qs->l2_Q9 , buffer_F2 , _O2 , _O2_BYTE );                              // Q9
 
     memset( buffer_F2 , 0 , _SIZE_BUFFER_F2 );
     memset( buffer_F3 , 0 , _SIZE_BUFFER_F2 );
@@ -388,7 +388,7 @@ error: incorrect buffer size.
 
 
 
-void calculate_Q_from_F( ext_cpk_t * Qs, const sk_t * Fs , const sk_t * Ts )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_Q_from_F( ext_cpk_t * Qs, const sk_t * Fs , const sk_t * Ts )
 {
     calculate_Q_from_F_impl( Qs , Fs , Ts );
 }
@@ -419,7 +419,7 @@ int crypto_core(unsigned char *outbytes,const unsigned char *inbytes,const unsig
 
 #else
 
-void calculate_F_from_Q( sk_t * Fs , const sk_t * Qs , const sk_t * Ts )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_F_from_Q( sk_t * Fs , const sk_t * Qs , const sk_t * Ts )
 {
     calculate_F_from_Q_impl( Fs , Qs , Ts );
 }
@@ -427,7 +427,7 @@ void calculate_F_from_Q( sk_t * Fs , const sk_t * Qs , const sk_t * Ts )
 #endif
 
 
-void calculate_Q_from_F_cyclic( cpk_t * Qs, const sk_t * Fs , const sk_t * Ts )
+void PQCLEAN_RAINBOWICLASSIC_AVX2_calculate_Q_from_F_cyclic( cpk_t * Qs, const sk_t * Fs , const sk_t * Ts )
 {
     calculate_Q_from_F_cyclic_impl( Qs , Fs , Ts );
 }

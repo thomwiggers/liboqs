@@ -22,6 +22,7 @@ extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_squ_x8[];
 extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_squ_sl4[];
 extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_exp[];
 extern const char PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_log[];
+#define __gf16_mul PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_mul_
 extern const unsigned char * __gf16_mul;
 extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf256_mul[];
 extern const unsigned char PQCLEAN_RAINBOWICLASSIC_AVX2___gf16_mulx2[];
